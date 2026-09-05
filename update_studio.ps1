@@ -1,11 +1,11 @@
 # 365 DevOps Studio Synchronization Script
-# Synchronizes carousel_studio.html and assets across all 6 phase directories
+# Synchronizes index.html and assets across all 6 phase directories
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "Verifying carousel_studio.html..."
-if (-not (Test-Path "carousel_studio.html")) {
-    Write-Error "carousel_studio.html not found in root directory!"
+Write-Host "Verifying index.html..."
+if (-not (Test-Path "index.html")) {
+    Write-Error "index.html not found in root directory!"
 }
 
 $phaseDirs = @(
@@ -19,9 +19,9 @@ $phaseDirs = @(
 
 foreach ($dir in $phaseDirs) {
   if (Test-Path $dir) {
-    Copy-Item "carousel_studio.html" "$dir\carousel_studio.html" -Force
-    Write-Host "✅ Synced to $dir\carousel_studio.html"
+    Copy-Item "index.html" "$dir\index.html" -Force
+    Write-Host "✅ Synced to $dir\index.html"
   }
 }
 
-Write-Host "🎉 All 6 phases successfully synchronized with root carousel_studio.html!"
+Write-Host "🎉 All 6 phases successfully synchronized with root index.html!"
