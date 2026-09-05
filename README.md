@@ -1,5 +1,10 @@
 # 365-Day Cloud & DevOps Personal Brand + Career Growth System
 
+[![GitHub Pages](https://img.shields.io/badge/🚀_Live_Demo-Carousel_Studio-0A66C2?style=for-the-badge&logo=github)](https://shubhu-io.github.io/daily-devops-365/)
+[![GitHub](https://img.shields.io/github/stars/shubhu-io/daily-devops-365?style=for-the-badge&logo=github&color=181717)](https://github.com/shubhu-io/daily-devops-365)
+
+### 🔗 [**Launch Carousel Studio →**](https://shubhu-io.github.io/daily-devops-365/)
+
 > **"Don't try to make me famous. Make me useful."**  
 > *A production-grade, 365-day technical personal branding, community-building, and inbound career engineering system in Cloud Infrastructure, DevOps, SRE, and Platform Engineering.*
 
